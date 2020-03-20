@@ -44,7 +44,7 @@ case "$1" in
         basedir
         mvn -N install
         cd ${FORK_NAME}-API
-        mvn -e -T 2C clean install && cd ../${FORK_NAME}-Server && mvn -e -T 2C clean install
+        mvn clean install && cd ../${FORK_NAME}-Server && mvn clean install
     )
     ;;
     "jar" | "paperclip")
