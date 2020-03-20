@@ -1,0 +1,18 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.bringyour.ownfork</groupId>
+    <artifactId>byof-parent</artifactId>
+    <version>dev-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>BYOF (Parent)</name>
+
+    <build>
+        <defaultGoal>install</defaultGoal>
+        <finalName>${project.artifactId}</finalName>
+    </build>
+    <modules>
+        <module>BYOF-API</module>
+        <module>BYOF-Server</module>
+    </modules>
+</project>
