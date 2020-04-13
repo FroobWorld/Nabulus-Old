@@ -1,0 +1,18 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.froobworld</groupId>
+    <artifactId>nabulus-parent</artifactId>
+    <version>dev-1.15-R0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>Nabulus (Parent)</name>
+
+    <build>
+        <defaultGoal>install</defaultGoal>
+        <finalName>${project.artifactId}</finalName>
+    </build>
+    <modules>
+        <module>Nabulus-API</module>
+        <module>Nabulus-Server</module>
+    </modules>
+</project>
