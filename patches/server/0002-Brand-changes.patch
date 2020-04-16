@@ -1,4 +1,4 @@
-From ecdae996431762f8deec53c02924a0873ae2bdde Mon Sep 17 00:00:00 2001
+From 08b39de137ff393cf991e4c6481ee5a688c2079a Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Mon, 13 Apr 2020 14:04:22 +0930
 Subject: [PATCH] Brand changes
@@ -9,10 +9,10 @@ Subject: [PATCH] Brand changes
  2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index a9b533751..c2fcaf969 100644
+index 36fff92f3..d646beca7 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1511,7 +1511,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1515,7 +1515,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      }
  
      public String getServerModName() {
