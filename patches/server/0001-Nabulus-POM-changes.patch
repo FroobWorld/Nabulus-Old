@@ -1,11 +1,12 @@
-From 323edcdf2e709f98c629d1a14b22cf06c4c44c00 Mon Sep 17 00:00:00 2001
+From 1831b90716c4a9cf05d0a6ff11a8f68078042270 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@gmail.com>
 Date: Mon, 13 Apr 2020 00:16:08 +0100
 Subject: [PATCH] Nabulus POM changes
 
 ---
- pom.xml | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ pom.xml                                          | 16 ++++++++--------
+ .../org/bukkit/craftbukkit/util/Versioning.java  |  2 +-
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
 index 55679af92..9ba9ac7fc 100644
@@ -56,6 +57,19 @@ index 55679af92..9ba9ac7fc 100644
                      <scmDirectory>..</scmDirectory>
                  </configuration>
                  <executions>
+diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
+index 674096cab..e547760cc 100644
+--- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
++++ b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
+@@ -11,7 +11,7 @@ public final class Versioning {
+     public static String getBukkitVersion() {
+         String result = "Unknown-Version";
+ 
+-        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/com.destroystokyo.paper/paper-api/pom.properties");
++        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/com.froobworld/nabulus-api/pom.properties");
+         Properties properties = new Properties();
+ 
+         if (stream != null) {
 -- 
 2.24.1
 
