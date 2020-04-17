@@ -3,7 +3,7 @@
 
     <groupId>com.froobworld</groupId>
     <artifactId>nabulus-parent</artifactId>
-    <version>dev-1.15-R0.1-SNAPSHOT</version>
+    <version>dev-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Nabulus (Parent)</name>
 
