@@ -1,4 +1,4 @@
-From 3d6c7600c078aa0d6683476a77b64f8d66edb750 Mon Sep 17 00:00:00 2001
+From 8d71ea2990ede6a01d2d6f99971f1d37a6f6cb09 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Mon, 13 Apr 2020 16:11:11 +0930
 Subject: [PATCH] Don't process idle hoppers
@@ -46,10 +46,10 @@ index a2a9949ea..aa67ba996 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index d745eae42..b041713f2 100644
+index 09137d878..9aa2ddaa4 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
-@@ -88,10 +88,15 @@ public class Chunk implements IChunkAccess {
+@@ -86,10 +86,15 @@ public class Chunk implements IChunkAccess {
      }
      // Track the number of minecarts and items
      // Keep this synced with entitySlices.add() and entitySlices.remove()
@@ -67,7 +67,7 @@ index d745eae42..b041713f2 100644
      // Paper start - optimise hard collision handling
      final com.destroystokyo.paper.util.maplist.EntityList[] hardCollidingEntities = new com.destroystokyo.paper.util.maplist.EntityList[16];
  
-@@ -591,8 +596,10 @@ public class Chunk implements IChunkAccess {
+@@ -577,8 +582,10 @@ public class Chunk implements IChunkAccess {
          // Paper start
          if (entity instanceof EntityItem) {
              itemCounts[k]++;
@@ -112,7 +112,7 @@ index a8e64dfda..280ee33cb 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/TileEntityHopper.java b/src/main/java/net/minecraft/server/TileEntityHopper.java
-index 4afd33a49..b555c1c4f 100644
+index 280c4e99e..124e08228 100644
 --- a/src/main/java/net/minecraft/server/TileEntityHopper.java
 +++ b/src/main/java/net/minecraft/server/TileEntityHopper.java
 @@ -52,6 +52,99 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
@@ -310,7 +310,7 @@ index 4afd33a49..b555c1c4f 100644
  
          if (iinventory != null) {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 5fa045998..ffc1eeca4 100644
+index 1a3c7c148..d8df805b0 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -106,6 +106,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
