@@ -21,8 +21,9 @@ paperVer=$(gethead Paper)
 cd "$basedir/Paper/"
 
 ./paper patch
+cd "Paper-MojangAPI" && mvn clean install
 
-cd "Paper-Server"
+cd "../Paper-Server"
 mcVer=$(mvn -o org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate -Dexpression=minecraft_version | sed -n -e '/^\[.*\]/ !{ /^[0-9]/ { p; q } }')
 
 basedir
@@ -56,7 +57,9 @@ fi
 
 tag Paper-API $forcetag
 tag Paper-Server $forcetag
+tag Paper-MojangAPI $forcetag
 
 pushRepo Paper-API $PAPER_API_REPO $tag
 pushRepo Paper-Server $PAPER_SERVER_REPO $tag
+pushRepo Paper-MojangAPI $PAPER_MOJANG_API_REPO $tag
 
