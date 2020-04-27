@@ -1,4 +1,4 @@
-From 8d71ea2990ede6a01d2d6f99971f1d37a6f6cb09 Mon Sep 17 00:00:00 2001
+From dc1fbf2f229d9ff1bf3a18861b3f9b335029f258 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Mon, 13 Apr 2020 16:11:11 +0930
 Subject: [PATCH] Don't process idle hoppers
@@ -310,10 +310,10 @@ index 280c4e99e..124e08228 100644
  
          if (iinventory != null) {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 1a3c7c148..d8df805b0 100644
+index 899c535c4..ba71e4b97 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -106,6 +106,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -112,6 +112,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
      List<StructureStart> strongholdStuctures = Lists.newArrayList();
      final java.lang.Object stuctureLock = new Object();
      // Paper end
