@@ -1,4 +1,4 @@
-From f72d6bd23eb9145a4a8ea9171b7f2057d2f5d56f Mon Sep 17 00:00:00 2001
+From d802395c04618931dbe63c8c81d82f02530cd906 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@gmail.com>
 Date: Mon, 13 Apr 2020 00:16:08 +0100
 Subject: [PATCH] Nabulus POM changes
@@ -9,7 +9,7 @@ Subject: [PATCH] Nabulus POM changes
  2 files changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index fd417a9ee..12def8f1d 100644
+index 0c0051f7f..b9370d063 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,11 +1,11 @@
@@ -48,7 +48,7 @@ index fd417a9ee..12def8f1d 100644
              <version>${project.version}</version>
              <scope>compile</scope>
          </dependency>
-@@ -154,7 +154,7 @@
+@@ -161,7 +161,7 @@
                  <artifactId>gitdescribe-maven-plugin</artifactId>
                  <version>1.3</version>
                  <configuration>
@@ -71,5 +71,5 @@ index 674096cab..e547760cc 100644
  
          if (stream != null) {
 -- 
-2.24.1
+2.26.2
 
