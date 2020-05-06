@@ -14,5 +14,6 @@
     <modules>
         <module>Nabulus-API</module>
         <module>Nabulus-Server</module>
+        <module>Paper/Paper-MojangAPI</module>
     </modules>
 </project>
