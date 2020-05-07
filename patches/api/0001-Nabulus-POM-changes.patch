@@ -1,14 +1,14 @@
-From 80787667a76e0200201b613716067d701f5392ee Mon Sep 17 00:00:00 2001
+From 618e10821ad77b25e82b557c39cf70841300e203 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Thu, 7 May 2020 10:13:28 +0930
 Subject: [PATCH] Nabulus POM changes
 
 ---
- pom.xml | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ pom.xml | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index 20c473f52..cdbc8d3d4 100644
+index 20c473f52..dad730278 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -3,18 +3,18 @@
@@ -36,19 +36,6 @@ index 20c473f52..cdbc8d3d4 100644
      <description>An enhanced plugin API for Minecraft servers.</description>
  
      <properties>
-@@ -49,6 +49,12 @@
-     </pluginRepositories>
- 
-     <dependencies>
-+        <dependency>
-+            <groupId>com.destroystokyo.paper</groupId>
-+            <artifactId>paper-mojangapi</artifactId>
-+            <version>${project.version}</version>
-+            <scope>compile</scope>
-+        </dependency>
-         <dependency>
-             <groupId>it.unimi.dsi</groupId>
-             <artifactId>fastutil</artifactId>
 -- 
 2.26.2
 
