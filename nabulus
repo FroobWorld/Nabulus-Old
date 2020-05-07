@@ -47,8 +47,11 @@ case "$1" in
 	(
 		basedir
 		mvn -N install
-		cd ${FORK_NAME}-API
-		mvn clean install && cd ../${FORK_NAME}-Server && mvn clean install
+		cd Paper/Paper-MojangAPI && mvn clean install
+		cd ..
+		cd ../${FORK_NAME}-API
+		mvn clean install
+		cd ../${FORK_NAME}-Server && mvn clean install
 	)
 	;;
 	"d" | "de" | "deploy")
