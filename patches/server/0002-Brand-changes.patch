@@ -1,4 +1,4 @@
-From 7b255d1e17ece8fbd096003adf32a92f032ab96c Mon Sep 17 00:00:00 2001
+From 2761f44bb5ccaf822737979dc5dad2e4d30e4f3d Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Mon, 13 Apr 2020 14:04:22 +0930
 Subject: [PATCH] Brand changes
@@ -6,7 +6,8 @@ Subject: [PATCH] Brand changes
 ---
  src/main/java/net/minecraft/server/MinecraftServer.java | 2 +-
  src/main/java/org/bukkit/craftbukkit/CraftServer.java   | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ src/main/java/org/bukkit/craftbukkit/Main.java          | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
 index 1a4bc9043..3818d6af5 100644
@@ -34,6 +35,19 @@ index b89f99a66..e1835be45 100644
      private final String serverVersion;
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
+diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
+index 93340e947..5ef7fc7b4 100644
+--- a/src/main/java/org/bukkit/craftbukkit/Main.java
++++ b/src/main/java/org/bukkit/craftbukkit/Main.java
+@@ -213,7 +213,7 @@ public class Main {
+                     System.setProperty(TerminalConsoleAppender.JLINE_OVERRIDE_PROPERTY, "false"); // Paper
+                 }
+ 
+-                if (Main.class.getPackage().getImplementationVendor() != null && System.getProperty("IReallyKnowWhatIAmDoingISwear") == null) {
++                if (false && Main.class.getPackage().getImplementationVendor() != null && System.getProperty("IReallyKnowWhatIAmDoingISwear") == null) { // Nabulus - Don't worry about this
+                     Date buildDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(Main.class.getPackage().getImplementationVendor()); // Paper
+ 
+                     Calendar deadline = Calendar.getInstance();
 -- 
 2.26.2
 
