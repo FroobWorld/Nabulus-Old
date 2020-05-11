@@ -1,4 +1,4 @@
-From 3295a503075848939bbdecfce1e038ee43171cb3 Mon Sep 17 00:00:00 2001
+From 9371db33456c5027a6494d1a04d840021d68e0bd Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Mon, 13 Apr 2020 16:11:11 +0930
 Subject: [PATCH] Don't process idle hoppers
@@ -46,7 +46,7 @@ index a2a9949ea..aa67ba996 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 2332f126f..775a0ab6c 100644
+index 8c1f3290d..47a9a5d98 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -86,10 +86,15 @@ public class Chunk implements IChunkAccess {
@@ -112,7 +112,7 @@ index a8e64dfda..280ee33cb 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/TileEntityHopper.java b/src/main/java/net/minecraft/server/TileEntityHopper.java
-index 280c4e99e..124e08228 100644
+index c755faed4..6cab1c701 100644
 --- a/src/main/java/net/minecraft/server/TileEntityHopper.java
 +++ b/src/main/java/net/minecraft/server/TileEntityHopper.java
 @@ -52,6 +52,99 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
@@ -232,7 +232,7 @@ index 280c4e99e..124e08228 100644
                      flag = this.j();
                  }
  
-@@ -192,6 +293,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -193,6 +294,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
                      itemstack = callPushMoveEvent(iinventory, itemstack);
                      if (itemstack == null) { // cancelled
                          origItemStack.setCount(origCount);
@@ -240,7 +240,7 @@ index 280c4e99e..124e08228 100644
                          return false;
                      }
                  }
-@@ -205,14 +307,17 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -206,14 +308,17 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
                      }
                      this.setItem(i, origItemStack);
                      iinventory.update();
@@ -289,7 +289,7 @@ index 280c4e99e..124e08228 100644
  
          return false;
      }
-@@ -395,6 +504,19 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
+@@ -431,6 +540,19 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
      }
  
      public static boolean a(IHopper ihopper) {

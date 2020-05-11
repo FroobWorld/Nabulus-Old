@@ -1,4 +1,4 @@
-From 0de845bb0b593a38dbfee3a2620ac578f2d1a1c6 Mon Sep 17 00:00:00 2001
+From 833d48b7f61da9a141931032f1ea623497a8be64 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Mon, 13 Apr 2020 14:04:22 +0930
 Subject: [PATCH] Brand changes
@@ -10,10 +10,10 @@ Subject: [PATCH] Brand changes
  3 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 1a4bc9043..3818d6af5 100644
+index a8bb89111..2424079a6 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1555,7 +1555,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1556,7 +1556,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      }
  
      public String getServerModName() {
@@ -23,7 +23,7 @@ index 1a4bc9043..3818d6af5 100644
  
      public CrashReport b(CrashReport crashreport) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index c2b7cb360..ad4cfb1ec 100644
+index 894917c88..48a693ba2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -205,7 +205,7 @@ import javax.annotation.Nullable; // Paper
