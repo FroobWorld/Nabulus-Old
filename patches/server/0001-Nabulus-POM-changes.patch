@@ -1,15 +1,15 @@
-From 0223fd6cceb752d4c0f1c5facdbef19f84038b6b Mon Sep 17 00:00:00 2001
+From fef076766a01e8c5a94b92412f0dc79f92bee774 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@gmail.com>
 Date: Mon, 13 Apr 2020 00:16:08 +0100
 Subject: [PATCH] Nabulus POM changes
 
 ---
- pom.xml                                          | 16 ++++++++--------
- .../org/bukkit/craftbukkit/util/Versioning.java  |  2 +-
- 2 files changed, 9 insertions(+), 9 deletions(-)
+ pom.xml                                       | 20 +++++++++++--------
+ .../bukkit/craftbukkit/util/Versioning.java   |  2 +-
+ 2 files changed, 13 insertions(+), 9 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index 1ae57e8ab..05efa9438 100644
+index 1ae57e8ab..d884d7602 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,11 +1,11 @@
@@ -48,7 +48,18 @@ index 1ae57e8ab..05efa9438 100644
              <version>${project.version}</version>
              <scope>compile</scope>
          </dependency>
-@@ -167,7 +167,7 @@
+@@ -148,6 +148,10 @@
+             <id>spigotmc-public</id>
+             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+         </repository>
++        <repository>
++            <id>aikar</id>
++            <url>https://repo.aikar.co/content/groups/aikar/</url>
++        </repository>
+     </repositories>
+ 
+     <pluginRepositories>
+@@ -167,7 +171,7 @@
                  <artifactId>gitdescribe-maven-plugin</artifactId>
                  <version>1.3</version>
                  <configuration>
