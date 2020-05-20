@@ -1,13 +1,13 @@
-From 60ca5633f3c847dd33823fa95c5a00873809f2c2 Mon Sep 17 00:00:00 2001
+From c818360436841f00654391354ae8e4ce3c71d7e9 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Wed, 20 May 2020 16:26:35 +0930
 Subject: [PATCH] Respect client view distance
 
 ---
  .../net/minecraft/server/EntityPlayer.java    |  1 +
- .../net/minecraft/server/PlayerChunkMap.java  | 28 +++++++++++++++++--
+ .../net/minecraft/server/PlayerChunkMap.java  | 30 +++++++++++++++++--
  .../java/net/minecraft/server/PlayerList.java |  5 +++-
- 3 files changed, 31 insertions(+), 3 deletions(-)
+ 3 files changed, 32 insertions(+), 4 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
 index d60f659b36..95377c4ed9 100644
@@ -22,9 +22,18 @@ index d60f659b36..95377c4ed9 100644
          // Paper start - add PlayerLocaleChangeEvent
          // Since the field is initialized to null, this event should always fire the first time the packet is received
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 5621416660..1f44ba6630 100644
+index 5621416660..53f06eb4d5 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
+@@ -189,7 +189,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+         }
+ 
+         player.needsChunkCenterUpdate = true;
+-        this.playerViewDistanceBroadcastMap.add(player, chunkX, chunkZ, effectiveNoTickViewDistance + 1); // clients need an extra neighbour to render the full view distance configured
++        this.playerViewDistanceBroadcastMap.add(player, chunkX, chunkZ, getBroadcastViewDistance(player) + 1); // clients need an extra neighbour to render the full view distance configured
+         player.needsChunkCenterUpdate = false;
+         // Paper end - no-tick view distance
+     }
 @@ -236,13 +236,34 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
          }
  
@@ -44,7 +53,7 @@ index 5621416660..1f44ba6630 100644
 +    //Nabulus start - Respect client render distance
 +
 +    public int getBroadcastViewDistance(EntityPlayer entityPlayer) {
-+        return Math.max(getEffectiveViewDistance(), Math.min(getEffectiveNoTickViewDistance(), entityPlayer.clientViewDistance));
++        return Math.max(getEffectiveViewDistance(), Math.min(getEffectiveNoTickViewDistance(), entityPlayer.clientViewDistance == null ? 0 : entityPlayer.clientViewDistance));
 +    }
 +
 +    public void updateClientViewDistance(EntityPlayer entityPlayer) {
