@@ -1,0 +1,94 @@
+From 60ca5633f3c847dd33823fa95c5a00873809f2c2 Mon Sep 17 00:00:00 2001
+From: froobynooby <froobynooby@froobworld.com>
+Date: Wed, 20 May 2020 16:26:35 +0930
+Subject: [PATCH] Respect client view distance
+
+---
+ .../net/minecraft/server/EntityPlayer.java    |  1 +
+ .../net/minecraft/server/PlayerChunkMap.java  | 28 +++++++++++++++++--
+ .../java/net/minecraft/server/PlayerList.java |  5 +++-
+ 3 files changed, 31 insertions(+), 3 deletions(-)
+
+diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
+index d60f659b36..95377c4ed9 100644
+--- a/src/main/java/net/minecraft/server/EntityPlayer.java
++++ b/src/main/java/net/minecraft/server/EntityPlayer.java
+@@ -1593,6 +1593,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+             this.server.server.getPluginManager().callEvent(event);
+         }
+         this.clientViewDistance = packetplayinsettings.viewDistance;
++        getWorldServer().getChunkProvider().playerChunkMap.updateMaps(this); // Nabulus - respect client view distance
+         // CraftBukkit end
+         // Paper start - add PlayerLocaleChangeEvent
+         // Since the field is initialized to null, this event should always fire the first time the packet is received
+diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
+index 5621416660..1f44ba6630 100644
+--- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
++++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
+@@ -236,13 +236,34 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+         }
+ 
+         player.needsChunkCenterUpdate = true;
+-        this.playerViewDistanceBroadcastMap.update(player, chunkX, chunkZ, effectiveNoTickViewDistance + 1); // clients need an extra neighbour to render the full view distance configured
++        // Nabulus start - Respect client render distance
++        //this.playerViewDistanceBroadcastMap.update(player, chunkX, chunkZ, effectiveNoTickViewDistance + 1); // clients need an extra neighbour to render the full view distance configured
++        this.updateClientViewDistance(player);
++        this.playerViewDistanceBroadcastMap.update(player, chunkX, chunkZ, getBroadcastViewDistance(player) + 1);
++        // Nabulus end
+         player.needsChunkCenterUpdate = false;
+         // Paper end - no-tick view distance
+     }
+ 
+ 
+     // Paper end
++    //Nabulus start - Respect client render distance
++
++    public int getBroadcastViewDistance(EntityPlayer entityPlayer) {
++        return Math.max(getEffectiveViewDistance(), Math.min(getEffectiveNoTickViewDistance(), entityPlayer.clientViewDistance));
++    }
++
++    public void updateClientViewDistance(EntityPlayer entityPlayer) {
++        int newViewDistance = getBroadcastViewDistance(entityPlayer);
++        if (newViewDistance + 1 != playerViewDistanceBroadcastMap.getLastViewDistance(entityPlayer)) {
++            PacketPlayOutViewDistance packet = new PacketPlayOutViewDistance(newViewDistance);
++            if (entityPlayer.playerConnection != null) {
++                entityPlayer.playerConnection.sendPacket(packet);
++            }
++        }
++    }
++
++    //Nabulus end
+ 
+     public PlayerChunkMap(WorldServer worldserver, File file, DataFixer datafixer, DefinedStructureManager definedstructuremanager, Executor executor, IAsyncTaskHandler<Runnable> iasynctaskhandler, ILightAccess ilightaccess, ChunkGenerator<?> chunkgenerator, WorldLoadListener worldloadlistener, Supplier<WorldPersistentData> supplier, int i) {
+         super(new File(worldserver.getWorldProvider().getDimensionManager().a(file), "region"), datafixer);
+@@ -1392,7 +1413,10 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+                 PlayerConnection connection = player.playerConnection;
+                 if (connection != null) {
+                     // moved in from PlayerList
+-                    connection.sendPacket(new PacketPlayOutViewDistance(loadViewDistance));
++                    // Nabulus start - Respect client view distance
++                    //connection.sendPacket(new PacketPlayOutViewDistance(loadViewDistance));
++                    updateClientViewDistance(player);
++                    // Nabulus end
+                 }
+                 this.updateMaps(player);
+             }
+diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
+index 9b726de6da..d220ede016 100644
+--- a/src/main/java/net/minecraft/server/PlayerList.java
++++ b/src/main/java/net/minecraft/server/PlayerList.java
+@@ -773,7 +773,10 @@ public abstract class PlayerList {
+         WorldData worlddata = worldserver.getWorldData();
+ 
+         entityplayer1.playerConnection.sendPacket(new PacketPlayOutRespawn(worldserver.worldProvider.getDimensionManager().getType(),  WorldData.c(worldserver.getWorldData().getSeed()), worldserver.getWorldData().getType(), entityplayer1.playerInteractManager.getGameMode()));
+-        entityplayer1.playerConnection.sendPacket(new PacketPlayOutViewDistance(worldserver.getChunkProvider().playerChunkMap.getLoadViewDistance())); // Paper - no-tick view distance
++        // Nabulus start - Respect client view distance
++        //entityplayer1.playerConnection.sendPacket(new PacketPlayOutViewDistance(worldserver.getChunkProvider().playerChunkMap.getLoadViewDistance())); // Paper - no-tick view distance
++        worldserver.getChunkProvider().playerChunkMap.updateClientViewDistance(entityplayer1);
++        // Nabulus end
+         entityplayer1.spawnIn(worldserver);
+         entityplayer1.dead = false;
+         entityplayer1.playerConnection.teleport(new Location(worldserver.getWorld(), entityplayer1.locX(), entityplayer1.locY(), entityplayer1.locZ(), entityplayer1.yaw, entityplayer1.pitch));
+-- 
+2.26.2
+
