@@ -1,4 +1,4 @@
-From c818360436841f00654391354ae8e4ce3c71d7e9 Mon Sep 17 00:00:00 2001
+From f0d9558f5e556aff1f3f3711e4ceec77ef77359e Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Wed, 20 May 2020 16:26:35 +0930
 Subject: [PATCH] Respect client view distance
@@ -22,10 +22,10 @@ index d60f659b36..95377c4ed9 100644
          // Paper start - add PlayerLocaleChangeEvent
          // Since the field is initialized to null, this event should always fire the first time the packet is received
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 5621416660..53f06eb4d5 100644
+index 7b4700bdef..7173bf1b38 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -189,7 +189,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -212,7 +212,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
          }
  
          player.needsChunkCenterUpdate = true;
@@ -34,7 +34,7 @@ index 5621416660..53f06eb4d5 100644
          player.needsChunkCenterUpdate = false;
          // Paper end - no-tick view distance
      }
-@@ -236,13 +236,34 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -259,13 +259,34 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
          }
  
          player.needsChunkCenterUpdate = true;
@@ -70,7 +70,7 @@ index 5621416660..53f06eb4d5 100644
  
      public PlayerChunkMap(WorldServer worldserver, File file, DataFixer datafixer, DefinedStructureManager definedstructuremanager, Executor executor, IAsyncTaskHandler<Runnable> iasynctaskhandler, ILightAccess ilightaccess, ChunkGenerator<?> chunkgenerator, WorldLoadListener worldloadlistener, Supplier<WorldPersistentData> supplier, int i) {
          super(new File(worldserver.getWorldProvider().getDimensionManager().a(file), "region"), datafixer);
-@@ -1392,7 +1413,10 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -1436,7 +1457,10 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
                  PlayerConnection connection = player.playerConnection;
                  if (connection != null) {
                      // moved in from PlayerList
