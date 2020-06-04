@@ -1,4 +1,4 @@
-From f9dd271b68ae140f985712b974983c09af87a18b Mon Sep 17 00:00:00 2001
+From 914287c52d1460a39dcdbfd9470c0766b7034b01 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Wed, 20 May 2020 16:26:35 +0930
 Subject: [PATCH] Respect client view distance
@@ -10,10 +10,10 @@ Subject: [PATCH] Respect client view distance
  3 files changed, 32 insertions(+), 4 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index d60f659b36..95377c4ed9 100644
+index c88177b776..66fa2f702e 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
-@@ -1593,6 +1593,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+@@ -1602,6 +1602,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
              this.server.server.getPluginManager().callEvent(event);
          }
          this.clientViewDistance = packetplayinsettings.viewDistance;
@@ -22,10 +22,10 @@ index d60f659b36..95377c4ed9 100644
          // Paper start - add PlayerLocaleChangeEvent
          // Since the field is initialized to null, this event should always fire the first time the packet is received
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index b7d8a7487e..76fc2e1ddc 100644
+index c5b5aaf4dd..fa0ebb125c 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -215,7 +215,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -216,7 +216,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
          }
  
          player.needsChunkCenterUpdate = true;
@@ -34,7 +34,7 @@ index b7d8a7487e..76fc2e1ddc 100644
          player.needsChunkCenterUpdate = false;
          // Paper end - no-tick view distance
      }
-@@ -262,13 +262,34 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -263,13 +263,34 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
          }
  
          player.needsChunkCenterUpdate = true;
@@ -83,7 +83,7 @@ index b7d8a7487e..76fc2e1ddc 100644
                  this.updateMaps(player);
              }
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 269580ae2a..d7bf87b6f3 100644
+index 7bb46cc7c6..17dbeb7df3 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -773,7 +773,10 @@ public abstract class PlayerList {

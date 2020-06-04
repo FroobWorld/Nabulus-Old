@@ -1,4 +1,4 @@
-From 2bcc63288429df1e222932f7bc2f0fe49e255cab Mon Sep 17 00:00:00 2001
+From 888ea459004570fd9a1b7e860eeca3ff2b5ef4a4 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Mon, 13 Apr 2020 14:04:22 +0930
 Subject: [PATCH] Brand changes
@@ -10,10 +10,10 @@ Subject: [PATCH] Brand changes
  3 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 5b24de6d60..6a35d6b93f 100644
+index 395e5034ea..b5826ad282 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1559,7 +1559,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1561,7 +1561,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
      }
  
      public String getServerModName() {
@@ -36,7 +36,7 @@ index 894917c889..48a693ba25 100644
      private final String bukkitVersion = Versioning.getBukkitVersion();
      private final Logger logger = Logger.getLogger("Minecraft");
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index ffee0c5ddf..3299a08613 100644
+index d6e5d014c0..f37bac6b5a 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -244,7 +244,7 @@ public class Main {
