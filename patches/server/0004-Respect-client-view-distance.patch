@@ -1,4 +1,4 @@
-From 8314a5595d384b637776949ea78163471ffa2034 Mon Sep 17 00:00:00 2001
+From 362ecd94a59f9b4e1802920c959b10fdb9b5e5bb Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Wed, 20 May 2020 16:26:35 +0930
 Subject: [PATCH] Respect client view distance
@@ -22,7 +22,7 @@ index c88177b776..66fa2f702e 100644
          // Paper start - add PlayerLocaleChangeEvent
          // Since the field is initialized to null, this event should always fire the first time the packet is received
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 580721583c..a333cf6972 100644
+index c58c38c835..c79bfad073 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -216,7 +216,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
@@ -70,7 +70,7 @@ index 580721583c..a333cf6972 100644
  
      public PlayerChunkMap(WorldServer worldserver, File file, DataFixer datafixer, DefinedStructureManager definedstructuremanager, Executor executor, IAsyncTaskHandler<Runnable> iasynctaskhandler, ILightAccess ilightaccess, ChunkGenerator<?> chunkgenerator, WorldLoadListener worldloadlistener, Supplier<WorldPersistentData> supplier, int i) {
          super(new File(worldserver.getWorldProvider().getDimensionManager().a(file), "region"), datafixer);
-@@ -1451,7 +1472,10 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -1454,7 +1475,10 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
                  PlayerConnection connection = player.playerConnection;
                  if (connection != null) {
                      // moved in from PlayerList
@@ -83,10 +83,10 @@ index 580721583c..a333cf6972 100644
                  this.updateMaps(player);
              }
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 7bb46cc7c6..17dbeb7df3 100644
+index c03395ce82..d91a9e3585 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -773,7 +773,10 @@ public abstract class PlayerList {
+@@ -776,7 +776,10 @@ public abstract class PlayerList {
          WorldData worlddata = worldserver.getWorldData();
  
          entityplayer1.playerConnection.sendPacket(new PacketPlayOutRespawn(worldserver.worldProvider.getDimensionManager().getType(),  WorldData.c(worldserver.getWorldData().getSeed()), worldserver.getWorldData().getType(), entityplayer1.playerInteractManager.getGameMode()));
