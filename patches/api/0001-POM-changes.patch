@@ -1,0 +1,37 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Michael H <3327625-clrxbl@users.noreply.gitlab.com>
+Date: Fri, 21 Feb 2020 11:22:34 +0100
+Subject: [PATCH] POM changes
+
+
+diff --git a/pom.xml b/pom.xml
+index a2387a667efba33135197d40efe879fc9f635d2f..c36b3d2e7cb80f092dbff5e59fbf2e5a58e31d3e 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -3,18 +3,18 @@
+          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+     <modelVersion>4.0.0</modelVersion>
+     <parent>
+-        <groupId>com.tuinity</groupId>
+-        <artifactId>tuinity-parent</artifactId>
++        <groupId>com.github.clrxbl.byof</groupId>
++        <artifactId>byof-parent</artifactId>
+         <version>dev-SNAPSHOT</version>
+         <relativePath>../pom.xml</relativePath>
+     </parent>
+ 
+-    <artifactId>tuinity-api</artifactId>
++    <artifactId>byof-api</artifactId>
+     <version>1.15.2-R0.1-SNAPSHOT</version>
+     <packaging>jar</packaging>
+ 
+-    <name>Tuinity-API</name>
+-    <url>https://github.com/Spottedleaf/Tuinity</url>
++    <name>BYOF-API</name>
++    <url>https://github.com/clrxbl/byof</url>
+     <description>An enhanced plugin API for Minecraft servers.</description>
+ 
+     <properties>
+-- 
+2.27.0
+

@@ -1,18 +1,53 @@
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.bringyour.ownfork</groupId>
-    <artifactId>byof-parent</artifactId>
+    <groupId>com.github.clrxbl.byof</groupId>
+    <artifactId>BYOF-parent</artifactId>
     <version>dev-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>BYOF (Parent)</name>
 
-    <build>
-        <defaultGoal>install</defaultGoal>
-        <finalName>${project.artifactId}</finalName>
-    </build>
+    <name>BYOF-Parent</name>
+    <description>Parent project for all BYOF modules.</description>
+    <url>https://github.com/clrxbl/byof</url>
+
     <modules>
         <module>BYOF-API</module>
+        <module>BYOF-MojangAPI</module>
         <module>BYOF-Server</module>
     </modules>
+
+    <build>
+        <defaultGoal>clean install</defaultGoal>
+    </build>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>md_5-releases</id>
+            <url>https://repo.md-5.net/content/repositories/releases/</url>
+        </repository>
+        <repository>
+            <id>aikar</id>
+            <url>https://repo.aikar.co/content/groups/aikar/</url>
+        </repository>
+        <repository>
+            <id>destroystokyo-repo</id>
+            <url>https://papermc.io/repo/repository/maven-public/</url>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>papermc-releases</id>
+            <url>https://papermc.io/repo/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>papermc-snapshots</id>
+            <url>https://papermc.io/repo/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
