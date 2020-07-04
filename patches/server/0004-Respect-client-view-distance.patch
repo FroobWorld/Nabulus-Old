@@ -1,4 +1,4 @@
-From 7f8638eb10e0798c6a779f180ffd260ca8e2d7fb Mon Sep 17 00:00:00 2001
+From d5ab1626e9ff84f530939c9e6fcc6d528417a236 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Wed, 20 May 2020 16:26:35 +0930
 Subject: [PATCH] Respect client view distance
@@ -10,10 +10,10 @@ Subject: [PATCH] Respect client view distance
  3 files changed, 33 insertions(+), 5 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index c047d8ff..47ad26b3 100644
+index eeed8edfd..5455a5c0a 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
-@@ -1725,6 +1725,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+@@ -1722,6 +1722,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
          }
          this.locale = packetplayinsettings.locale;
          this.clientViewDistance = packetplayinsettings.viewDistance;
@@ -22,7 +22,7 @@ index c047d8ff..47ad26b3 100644
          // Paper start - add PlayerLocaleChangeEvent
          // Since the field is initialized to null, this event should always fire the first time the packet is received
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 4dd6f48c..1aeb73c7 100644
+index 4dd6f48ca..1aeb73c7d 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -220,7 +220,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
@@ -81,7 +81,7 @@ index 4dd6f48c..1aeb73c7 100644
                  this.updateMaps(player);
              }
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 3c5ba8f2..eaed1eb4 100644
+index 3c5ba8f2f..eaed1eb47 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -175,7 +175,7 @@ public abstract class PlayerList {

@@ -1,4 +1,4 @@
-From 725694e0184e6951c65902ace9e75b6bca28961f Mon Sep 17 00:00:00 2001
+From 8e2a2eb77d3cb9fe54e73cd1d3a1fb5fde975c8a Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Mon, 13 Apr 2020 16:11:11 +0930
 Subject: [PATCH] Don't process idle hoppers
@@ -12,10 +12,10 @@ Subject: [PATCH] Don't process idle hoppers
  5 files changed, 170 insertions(+), 9 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/BlockComposter.java b/src/main/java/net/minecraft/server/BlockComposter.java
-index 6aba170a..2a2e859a 100644
+index b86043d5c..0371c9e5a 100644
 --- a/src/main/java/net/minecraft/server/BlockComposter.java
 +++ b/src/main/java/net/minecraft/server/BlockComposter.java
-@@ -227,6 +227,14 @@ public class BlockComposter extends Block implements IInventoryHolder {
+@@ -243,6 +243,14 @@ public class BlockComposter extends Block implements IInventoryHolder {
          if ((Integer) iblockdata.get(BlockComposter.a) == 7) {
              worldserver.setTypeAndData(blockposition, (IBlockData) iblockdata.a((IBlockState) BlockComposter.a), 3);
              worldserver.playSound((EntityHuman) null, blockposition, SoundEffects.BLOCK_COMPOSTER_READY, SoundCategory.BLOCKS, 1.0F, 1.0F);
@@ -30,7 +30,7 @@ index 6aba170a..2a2e859a 100644
          }
  
      }
-@@ -355,6 +363,14 @@ public class BlockComposter extends Block implements IInventoryHolder {
+@@ -371,6 +379,14 @@ public class BlockComposter extends Block implements IInventoryHolder {
                  this.emptied = false;
              }
              // CraftBukkit end
@@ -46,7 +46,7 @@ index 6aba170a..2a2e859a 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 996438b0..05a1e84d 100644
+index 996438b00..05a1e84dc 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -87,10 +87,15 @@ public class Chunk implements IChunkAccess {
@@ -79,7 +79,7 @@ index 996438b0..05a1e84d 100644
          // Paper end
          entity.entitySlice = this.entitySlices[k]; // Paper
 diff --git a/src/main/java/net/minecraft/server/TileEntity.java b/src/main/java/net/minecraft/server/TileEntity.java
-index e1f1d6e3..053270c9 100644
+index e1f1d6e33..053270c97 100644
 --- a/src/main/java/net/minecraft/server/TileEntity.java
 +++ b/src/main/java/net/minecraft/server/TileEntity.java
 @@ -186,6 +186,16 @@ public abstract class TileEntity implements KeyedObject, Cloneable { // Paper //
@@ -112,7 +112,7 @@ index e1f1d6e3..053270c9 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/TileEntityHopper.java b/src/main/java/net/minecraft/server/TileEntityHopper.java
-index 20df9bd2..b8a638df 100644
+index 20df9bd21..b8a638dfb 100644
 --- a/src/main/java/net/minecraft/server/TileEntityHopper.java
 +++ b/src/main/java/net/minecraft/server/TileEntityHopper.java
 @@ -52,6 +52,99 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
@@ -310,7 +310,7 @@ index 20df9bd2..b8a638df 100644
  
          if (iinventory != null) {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 8df4ef48..7393c1b9 100644
+index 8df4ef488..7393c1b91 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -118,6 +118,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
