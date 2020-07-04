@@ -1,4 +1,4 @@
-From c84d79b956881762c85d3f62574c64a938db4418 Mon Sep 17 00:00:00 2001
+From 725694e0184e6951c65902ace9e75b6bca28961f Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Mon, 13 Apr 2020 16:11:11 +0930
 Subject: [PATCH] Don't process idle hoppers
@@ -12,32 +12,32 @@ Subject: [PATCH] Don't process idle hoppers
  5 files changed, 170 insertions(+), 9 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/BlockComposter.java b/src/main/java/net/minecraft/server/BlockComposter.java
-index a2a9949ea7..aa67ba9965 100644
+index 6aba170a..2a2e859a 100644
 --- a/src/main/java/net/minecraft/server/BlockComposter.java
 +++ b/src/main/java/net/minecraft/server/BlockComposter.java
-@@ -192,6 +192,14 @@ public class BlockComposter extends Block implements IInventoryHolder {
+@@ -227,6 +227,14 @@ public class BlockComposter extends Block implements IInventoryHolder {
          if ((Integer) iblockdata.get(BlockComposter.a) == 7) {
              worldserver.setTypeAndData(blockposition, (IBlockData) iblockdata.a((IBlockState) BlockComposter.a), 3);
              worldserver.playSound((EntityHuman) null, blockposition, SoundEffects.BLOCK_COMPOSTER_READY, SoundCategory.BLOCKS, 1.0F, 1.0F);
 +            // Nabulus start - Don't process idle hoppers
 +            Chunk chunk = worldserver.getChunkIfLoaded(blockposition);
 +            if (chunk != null) {
-+                chunk.inventoryUpdateTickSlices[blockposition.y] = MinecraftServer.currentTick;
++                chunk.inventoryUpdateTickSlices[blockposition.getY()] = MinecraftServer.currentTick;
 +            } else {
 +                Chunk.lastUnknownInventoryUpdate = MinecraftServer.currentTick;
 +            }
 +            // Nabulus end
          }
  
-         super.tick(iblockdata, worldserver, blockposition, random);
-@@ -319,6 +327,14 @@ public class BlockComposter extends Block implements IInventoryHolder {
+     }
+@@ -355,6 +363,14 @@ public class BlockComposter extends Block implements IInventoryHolder {
                  this.emptied = false;
              }
              // CraftBukkit end
 +            // Nabulus start - Don't process idle hoppers
 +            Chunk chunk = generatorAccess.getMinecraftWorld().getChunkIfLoaded(blockPosition);
 +            if (chunk != null) {
-+                chunk.inventoryUpdateTickSlices[blockPosition.y] = MinecraftServer.currentTick;
++                chunk.inventoryUpdateTickSlices[blockPosition.getY()] = MinecraftServer.currentTick;
 +            } else {
 +                Chunk.lastUnknownInventoryUpdate = MinecraftServer.currentTick;
 +            }
@@ -46,10 +46,10 @@ index a2a9949ea7..aa67ba9965 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index d7beb47d9e..d37668e65e 100644
+index 996438b0..05a1e84d 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
-@@ -86,10 +86,15 @@ public class Chunk implements IChunkAccess {
+@@ -87,10 +87,15 @@ public class Chunk implements IChunkAccess {
      }
      // Track the number of minecarts and items
      // Keep this synced with entitySlices.add() and entitySlices.remove()
@@ -67,7 +67,7 @@ index d7beb47d9e..d37668e65e 100644
      // Paper start - optimise hard collision handling
      final com.destroystokyo.paper.util.maplist.EntityList[] hardCollidingEntities = new com.destroystokyo.paper.util.maplist.EntityList[16];
  
-@@ -641,8 +646,10 @@ public class Chunk implements IChunkAccess {
+@@ -675,8 +680,10 @@ public class Chunk implements IChunkAccess {
          // Paper start
          if (entity instanceof EntityItem) {
              itemCounts[k]++;
@@ -79,10 +79,10 @@ index d7beb47d9e..d37668e65e 100644
          // Paper end
          entity.entitySlice = this.entitySlices[k]; // Paper
 diff --git a/src/main/java/net/minecraft/server/TileEntity.java b/src/main/java/net/minecraft/server/TileEntity.java
-index a8e64dfdab..280ee33cb1 100644
+index e1f1d6e3..053270c9 100644
 --- a/src/main/java/net/minecraft/server/TileEntity.java
 +++ b/src/main/java/net/minecraft/server/TileEntity.java
-@@ -141,6 +141,16 @@ public abstract class TileEntity implements KeyedObject { // Paper
+@@ -186,6 +186,16 @@ public abstract class TileEntity implements KeyedObject, Cloneable { // Paper //
  
      public void update() {
          if (this.world != null) {
@@ -99,7 +99,7 @@ index a8e64dfdab..280ee33cb1 100644
              if (IGNORE_TILE_UPDATES) return; // Paper
              this.c = this.world.getType(this.position);
              this.world.b(this.position, this);
-@@ -148,6 +158,11 @@ public abstract class TileEntity implements KeyedObject { // Paper
+@@ -193,6 +203,11 @@ public abstract class TileEntity implements KeyedObject, Cloneable { // Paper //
                  this.world.updateAdjacentComparators(this.position, this.c.getBlock());
              }
          }
@@ -112,7 +112,7 @@ index a8e64dfdab..280ee33cb1 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/TileEntityHopper.java b/src/main/java/net/minecraft/server/TileEntityHopper.java
-index c755faed4f..6cab1c7012 100644
+index 20df9bd2..b8a638df 100644
 --- a/src/main/java/net/minecraft/server/TileEntityHopper.java
 +++ b/src/main/java/net/minecraft/server/TileEntityHopper.java
 @@ -52,6 +52,99 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
@@ -145,14 +145,14 @@ index c755faed4f..6cab1c7012 100644
 +
 +    public boolean attemptPullIfIdle() {
 +        boolean layerAboveUpdated = getPosition().getY() < 255
-+                && getCurrentChunk().inventoryUpdateTickSlices[position.y + 1] >= lastAttemptedPullTick
++                && getCurrentChunk().inventoryUpdateTickSlices[position.getY() + 1] >= lastAttemptedPullTick
 +                || Chunk.lastUnknownInventoryUpdate >= lastAttemptedPullTick;
 +        if (layerAboveUpdated) {
 +            return true;
 +        }
 +        AxisAlignedBB pullZone = new AxisAlignedBB(
-+                position.x, position.y, position.z + 1.0,
-+                position.x + 1.0, position.y + 2.0, position.z + 1.0
++                position.getX(), position.getY(), position.getZ() + 1.0,
++                position.getX() + 1.0, position.getY() + 2.0, position.getZ() + 1.0
 +        );
 +
 +        return itemsOrInventoriesNear(pullZone);
@@ -171,8 +171,8 @@ index c755faed4f..6cab1c7012 100644
 +        }
 +
 +        AxisAlignedBB pushZone = new AxisAlignedBB(
-+                pushPosition.x, pushPosition.y, pushPosition.z,
-+                pushPosition.x + 1.0D, pushPosition.y + 1.0D, pushPosition.z + 1.0D
++                pushPosition.getX(), pushPosition.getY(), pushPosition.getZ(),
++                pushPosition.getX() + 1.0D, pushPosition.getY() + 1.0D, pushPosition.getZ() + 1.0D
 +        );
 +
 +        return itemsOrInventoriesNear(pushZone);
@@ -214,9 +214,9 @@ index c755faed4f..6cab1c7012 100644
 +
      public TileEntityHopper() {
          super(TileEntityTypes.HOPPER);
-         this.items = NonNullList.a(5, ItemStack.a);
+         this.items = NonNullList.a(5, ItemStack.b);
 @@ -131,7 +224,15 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
-             if (!this.l() && (Boolean) this.getBlock().get(BlockHopper.ENABLED)) {
+             if (!this.m() && (Boolean) this.getBlock().get(BlockHopper.ENABLED)) {
                  boolean flag = false;
  
 -                if (!this.isEmpty()) {
@@ -229,7 +229,7 @@ index c755faed4f..6cab1c7012 100644
 +                //if (!this.isEmpty()) {
 +                if (attemptPush && !this.isEmpty()) {
 +                // Nabulus end
-                     flag = this.j();
+                     flag = this.k();
                  }
  
 @@ -193,6 +294,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
@@ -310,17 +310,17 @@ index c755faed4f..6cab1c7012 100644
  
          if (iinventory != null) {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 9de505d01f..d651751e68 100644
+index 8df4ef48..7393c1b9 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -112,6 +112,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
-     List<StructureStart> strongholdStuctures = Lists.newArrayList();
-     final java.lang.Object stuctureLock = new Object();
+@@ -118,6 +118,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+         return ((WorldServer)this).getChunkIfLoaded(x, z) != null;
+     }
      // Paper end
 +    public int lastItemInventorySliceMove; // Nabulus - Don't process idle hoppers
  
-     public CraftWorld getWorld() {
-         return this.world;
+     protected World(WorldDataMutable worlddatamutable, ResourceKey<World> resourcekey, ResourceKey<DimensionManager> resourcekey1, DimensionManager dimensionmanager, Supplier<GameProfilerFiller> supplier, boolean flag, boolean flag1, long i, org.bukkit.generator.ChunkGenerator gen, org.bukkit.World.Environment env, java.util.concurrent.Executor executor) {
+         this.spigotConfig = new org.spigotmc.SpigotWorldConfig(((WorldDataServer) worlddatamutable).getName()); // Spigot
 -- 
 2.26.2
 

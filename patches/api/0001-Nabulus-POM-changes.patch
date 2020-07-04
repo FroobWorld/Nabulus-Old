@@ -1,36 +1,36 @@
-From 618e10821ad77b25e82b557c39cf70841300e203 Mon Sep 17 00:00:00 2001
+From 3bd355a1ddc3917db2a7adf267563bb8d76902d0 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Thu, 7 May 2020 10:13:28 +0930
 Subject: [PATCH] Nabulus POM changes
 
 ---
- pom.xml | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ pom.xml | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index 20c473f52..dad730278 100644
+index 12a5e929..ed8448f0 100644
 --- a/pom.xml
 +++ b/pom.xml
-@@ -3,18 +3,18 @@
+@@ -3,18 +3,19 @@
           xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
      <modelVersion>4.0.0</modelVersion>
      <parent>
--        <groupId>com.destroystokyo.paper</groupId>
--        <artifactId>paper-parent</artifactId>
+-        <groupId>com.tuinity</groupId>
+-        <artifactId>tuinity-parent</artifactId>
 +        <groupId>com.froobworld</groupId>
 +        <artifactId>nabulus-parent</artifactId>
          <version>dev-SNAPSHOT</version>
+         <relativePath>../pom.xml</relativePath>
      </parent>
  
--    <groupId>com.destroystokyo.paper</groupId>
--    <artifactId>paper-api</artifactId>
+-    <artifactId>tuinity-api</artifactId>
 +    <groupId>com.froobworld</groupId>
 +    <artifactId>nabulus-api</artifactId>
-     <version>1.15.2-R0.1-SNAPSHOT</version>
+     <version>1.16.1-R0.1-SNAPSHOT</version>
      <packaging>jar</packaging>
  
--    <name>Paper-API</name>
--    <url>https://github.com/PaperMC/Paper</url>
+-    <name>Tuinity-API</name>
+-    <url>https://github.com/Spottedleaf/Tuinity</url>
 +    <name>Nabulus-API</name>
 +    <url>https://github.com/FroobWorld/Nabulus</url>
      <description>An enhanced plugin API for Minecraft servers.</description>
