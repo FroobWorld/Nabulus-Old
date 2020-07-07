@@ -1,4 +1,4 @@
-From 8e2a2eb77d3cb9fe54e73cd1d3a1fb5fde975c8a Mon Sep 17 00:00:00 2001
+From 22d58317b47eb41e1cee0ece50ac5ed52a65fd94 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Mon, 13 Apr 2020 16:11:11 +0930
 Subject: [PATCH] Don't process idle hoppers
@@ -12,10 +12,10 @@ Subject: [PATCH] Don't process idle hoppers
  5 files changed, 170 insertions(+), 9 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/BlockComposter.java b/src/main/java/net/minecraft/server/BlockComposter.java
-index b86043d5c..0371c9e5a 100644
+index 83b80e25f..405788663 100644
 --- a/src/main/java/net/minecraft/server/BlockComposter.java
 +++ b/src/main/java/net/minecraft/server/BlockComposter.java
-@@ -243,6 +243,14 @@ public class BlockComposter extends Block implements IInventoryHolder {
+@@ -251,6 +251,14 @@ public class BlockComposter extends Block implements IInventoryHolder {
          if ((Integer) iblockdata.get(BlockComposter.a) == 7) {
              worldserver.setTypeAndData(blockposition, (IBlockData) iblockdata.a((IBlockState) BlockComposter.a), 3);
              worldserver.playSound((EntityHuman) null, blockposition, SoundEffects.BLOCK_COMPOSTER_READY, SoundCategory.BLOCKS, 1.0F, 1.0F);
@@ -30,7 +30,7 @@ index b86043d5c..0371c9e5a 100644
          }
  
      }
-@@ -371,6 +379,14 @@ public class BlockComposter extends Block implements IInventoryHolder {
+@@ -379,6 +387,14 @@ public class BlockComposter extends Block implements IInventoryHolder {
                  this.emptied = false;
              }
              // CraftBukkit end
@@ -46,7 +46,7 @@ index b86043d5c..0371c9e5a 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 996438b00..05a1e84dc 100644
+index 09b8f9a3f..2ef17c043 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -87,10 +87,15 @@ public class Chunk implements IChunkAccess {
@@ -310,7 +310,7 @@ index 20df9bd21..b8a638dfb 100644
  
          if (iinventory != null) {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 8df4ef488..7393c1b91 100644
+index 4a956f368..253436ada 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -118,6 +118,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
