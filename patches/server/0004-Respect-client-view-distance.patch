@@ -1,4 +1,4 @@
-From 73a470abd0fc9a78be63dfe9f1f069cdbb296376 Mon Sep 17 00:00:00 2001
+From e11d186188c19fe0527726b6596592d63302b80b Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Wed, 20 May 2020 16:26:35 +0930
 Subject: [PATCH] Respect client view distance
@@ -10,7 +10,7 @@ Subject: [PATCH] Respect client view distance
  3 files changed, 33 insertions(+), 5 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index 8fd3c913a..d13ce97a9 100644
+index 4550e3449..9744d1756 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
 @@ -1722,6 +1722,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
@@ -22,7 +22,7 @@ index 8fd3c913a..d13ce97a9 100644
          // Paper start - add PlayerLocaleChangeEvent
          // Since the field is initialized to null, this event should always fire the first time the packet is received
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 4dd6f48ca..1aeb73c7d 100644
+index f15f05150..e13b7ce2b 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -220,7 +220,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
@@ -66,9 +66,9 @@ index 4dd6f48ca..1aeb73c7d 100644
 +
 +    //Nabulus end
  
-     public PlayerChunkMap(WorldServer worldserver, Convertable.ConversionSession convertable_conversionsession, DataFixer datafixer, DefinedStructureManager definedstructuremanager, Executor executor, IAsyncTaskHandler<Runnable> iasynctaskhandler, ILightAccess ilightaccess, ChunkGenerator chunkgenerator, WorldLoadListener worldloadlistener, Supplier<WorldPersistentData> supplier, int i, boolean flag) {
-         super(new File(convertable_conversionsession.a(worldserver.getDimensionKey()), "region"), datafixer, flag);
-@@ -1516,7 +1537,10 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+     // Tuinity start
+     public static enum RegionData implements com.tuinity.tuinity.chunk.SingleThreadChunkRegionManager.RegionDataCreator<RegionData> {
+@@ -1544,7 +1565,10 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
                  PlayerConnection connection = player.playerConnection;
                  if (connection != null) {
                      // moved in from PlayerList
@@ -81,7 +81,7 @@ index 4dd6f48ca..1aeb73c7d 100644
                  this.updateMaps(player);
              }
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 3c2f1f140..c93c76655 100644
+index 9382e8f79..a73e84745 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -186,7 +186,7 @@ public abstract class PlayerList {
@@ -93,7 +93,7 @@ index 3c2f1f140..c93c76655 100644
          entityplayer.getBukkitEntity().sendSupportedChannels(); // CraftBukkit
          playerconnection.sendPacket(new PacketPlayOutCustomPayload(PacketPlayOutCustomPayload.a, (new PacketDataSerializer(Unpooled.buffer())).a(this.getServer().getServerModName())));
          playerconnection.sendPacket(new PacketPlayOutServerDifficulty(worlddata.getDifficulty(), worlddata.isDifficultyLocked()));
-@@ -827,7 +827,10 @@ public abstract class PlayerList {
+@@ -833,7 +833,10 @@ public abstract class PlayerList {
          // CraftBukkit start
          WorldData worlddata = worldserver1.getWorldData();
          entityplayer1.playerConnection.sendPacket(new PacketPlayOutRespawn(worldserver1.getTypeKey(), worldserver1.getDimensionKey(), BiomeManager.a(worldserver1.getSeed()), entityplayer1.playerInteractManager.getGameMode(), entityplayer1.playerInteractManager.c(), worldserver1.isDebugWorld(), worldserver1.isFlatWorld(), flag));
