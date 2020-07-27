@@ -1,4 +1,4 @@
-From e11d186188c19fe0527726b6596592d63302b80b Mon Sep 17 00:00:00 2001
+From 61cf3349aea7d652345f072733b202ddaab19876 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Wed, 20 May 2020 16:26:35 +0930
 Subject: [PATCH] Respect client view distance
@@ -22,7 +22,7 @@ index 4550e3449..9744d1756 100644
          // Paper start - add PlayerLocaleChangeEvent
          // Since the field is initialized to null, this event should always fire the first time the packet is received
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index f15f05150..e13b7ce2b 100644
+index 78e7f6bc3..c602a7745 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -220,7 +220,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
@@ -68,7 +68,7 @@ index f15f05150..e13b7ce2b 100644
  
      // Tuinity start
      public static enum RegionData implements com.tuinity.tuinity.chunk.SingleThreadChunkRegionManager.RegionDataCreator<RegionData> {
-@@ -1544,7 +1565,10 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -1546,7 +1567,10 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
                  PlayerConnection connection = player.playerConnection;
                  if (connection != null) {
                      // moved in from PlayerList
