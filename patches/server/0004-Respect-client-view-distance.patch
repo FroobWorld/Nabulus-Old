@@ -1,4 +1,4 @@
-From b48813edcf33c0fe11b809ed13b2e5c86d146376 Mon Sep 17 00:00:00 2001
+From 17d31d5075c9faf3e5a988988657daf69646e34a Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Wed, 20 May 2020 16:26:35 +0930
 Subject: [PATCH] Respect client view distance
@@ -6,8 +6,8 @@ Subject: [PATCH] Respect client view distance
 ---
  .../net/minecraft/server/EntityPlayer.java    |  1 +
  .../net/minecraft/server/PlayerChunkMap.java  | 30 +++++++++++++++++--
- .../java/net/minecraft/server/PlayerList.java |  5 +++-
- 3 files changed, 32 insertions(+), 4 deletions(-)
+ .../java/net/minecraft/server/PlayerList.java |  7 +++--
+ 3 files changed, 33 insertions(+), 5 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
 index 11fa231ca..8608b2529 100644
@@ -81,9 +81,18 @@ index 6016a7bc5..de5d32b51 100644
                  this.updateMaps(player);
              }
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 787e80c50..01acf8bc2 100644
+index 787e80c50..b6d7551f9 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
+@@ -186,7 +186,7 @@ public abstract class PlayerList {
+         boolean flag1 = gamerules.getBoolean(GameRules.REDUCED_DEBUG_INFO);
+ 
+         // Spigot - view distance
+-        playerconnection.sendPacket(new PacketPlayOutLogin(entityplayer.getId(), entityplayer.playerInteractManager.getGameMode(), entityplayer.playerInteractManager.c(), BiomeManager.a(worldserver1.getSeed()), worlddata.isHardcore(), this.server.F(), this.s, worldserver1.getDimensionManager(), worldserver1.getDimensionKey(), this.getMaxPlayers(), worldserver1.getChunkProvider().playerChunkMap.getLoadViewDistance(), flag1, !flag, worldserver1.isDebugWorld(), worldserver1.isFlatWorld())); // Paper - no-tick view distance
++        playerconnection.sendPacket(new PacketPlayOutLogin(entityplayer.getId(), entityplayer.playerInteractManager.getGameMode(), entityplayer.playerInteractManager.c(), BiomeManager.a(worldserver1.getSeed()), worlddata.isHardcore(), this.server.F(), this.s, worldserver1.getDimensionManager(), worldserver1.getDimensionKey(), this.getMaxPlayers(), worldserver1.getChunkProvider().playerChunkMap.getBroadcastViewDistance(entityplayer), flag1, !flag, worldserver1.isDebugWorld(), worldserver1.isFlatWorld())); // Paper - no-tick view distance // Nabulus - Respect client view distance
+         entityplayer.getBukkitEntity().sendSupportedChannels(); // CraftBukkit
+         playerconnection.sendPacket(new PacketPlayOutCustomPayload(PacketPlayOutCustomPayload.a, (new PacketDataSerializer(Unpooled.buffer())).a(this.getServer().getServerModName())));
+         playerconnection.sendPacket(new PacketPlayOutServerDifficulty(worlddata.getDifficulty(), worlddata.isDifficultyLocked()));
 @@ -845,7 +845,10 @@ public abstract class PlayerList {
          // CraftBukkit start
          WorldData worlddata = worldserver1.getWorldData();
