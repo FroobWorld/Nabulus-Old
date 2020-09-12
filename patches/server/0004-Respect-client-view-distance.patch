@@ -1,4 +1,4 @@
-From 61cf3349aea7d652345f072733b202ddaab19876 Mon Sep 17 00:00:00 2001
+From b48813edcf33c0fe11b809ed13b2e5c86d146376 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Wed, 20 May 2020 16:26:35 +0930
 Subject: [PATCH] Respect client view distance
@@ -6,26 +6,26 @@ Subject: [PATCH] Respect client view distance
 ---
  .../net/minecraft/server/EntityPlayer.java    |  1 +
  .../net/minecraft/server/PlayerChunkMap.java  | 30 +++++++++++++++++--
- .../java/net/minecraft/server/PlayerList.java |  7 +++--
- 3 files changed, 33 insertions(+), 5 deletions(-)
+ .../java/net/minecraft/server/PlayerList.java |  5 +++-
+ 3 files changed, 32 insertions(+), 4 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index 4550e3449..9744d1756 100644
+index 11fa231ca..8608b2529 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
-@@ -1722,6 +1722,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+@@ -1697,6 +1697,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
          }
          this.locale = packetplayinsettings.locale;
          this.clientViewDistance = packetplayinsettings.viewDistance;
 +        getWorldServer().getChunkProvider().playerChunkMap.updateMaps(this); // Nabulus - respect client view distance
          // CraftBukkit end
-         // Paper start - add PlayerLocaleChangeEvent
-         // Since the field is initialized to null, this event should always fire the first time the packet is received
+         this.bY = packetplayinsettings.d();
+         this.bZ = packetplayinsettings.e();
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 78e7f6bc3..c602a7745 100644
+index 6016a7bc5..de5d32b51 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -220,7 +220,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -222,7 +222,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
          }
  
          player.needsChunkCenterUpdate = true;
@@ -34,7 +34,7 @@ index 78e7f6bc3..c602a7745 100644
          player.needsChunkCenterUpdate = false;
          // Paper end - no-tick view distance
      }
-@@ -269,11 +269,32 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -271,11 +271,32 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
          }
  
          player.needsChunkCenterUpdate = true;
@@ -68,7 +68,7 @@ index 78e7f6bc3..c602a7745 100644
  
      // Tuinity start
      public static enum RegionData implements com.tuinity.tuinity.chunk.SingleThreadChunkRegionManager.RegionDataCreator<RegionData> {
-@@ -1546,7 +1567,10 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -1559,7 +1580,10 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
                  PlayerConnection connection = player.playerConnection;
                  if (connection != null) {
                      // moved in from PlayerList
@@ -81,22 +81,13 @@ index 78e7f6bc3..c602a7745 100644
                  this.updateMaps(player);
              }
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 9382e8f79..a73e84745 100644
+index 787e80c50..01acf8bc2 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
-@@ -186,7 +186,7 @@ public abstract class PlayerList {
-         boolean flag1 = gamerules.getBoolean(GameRules.REDUCED_DEBUG_INFO);
- 
-         // Spigot - view distance
--        playerconnection.sendPacket(new PacketPlayOutLogin(entityplayer.getId(), entityplayer.playerInteractManager.getGameMode(), entityplayer.playerInteractManager.c(), BiomeManager.a(worldserver1.getSeed()), worlddata.isHardcore(), this.server.E(), this.s, worldserver1.getTypeKey(), worldserver1.getDimensionKey(), this.getMaxPlayers(), worldserver1.getChunkProvider().playerChunkMap.getLoadViewDistance(), flag1, !flag, worldserver1.isDebugWorld(), worldserver1.isFlatWorld())); // Paper - no-tick view distance
-+        playerconnection.sendPacket(new PacketPlayOutLogin(entityplayer.getId(), entityplayer.playerInteractManager.getGameMode(), entityplayer.playerInteractManager.c(), BiomeManager.a(worldserver1.getSeed()), worlddata.isHardcore(), this.server.E(), this.s, worldserver1.getTypeKey(), worldserver1.getDimensionKey(), this.getMaxPlayers(), worldserver1.getChunkProvider().playerChunkMap.getBroadcastViewDistance(entityplayer), flag1, !flag, worldserver1.isDebugWorld(), worldserver1.isFlatWorld())); // Paper - no-tick view distance // Nabulus - Respect client view distance
-         entityplayer.getBukkitEntity().sendSupportedChannels(); // CraftBukkit
-         playerconnection.sendPacket(new PacketPlayOutCustomPayload(PacketPlayOutCustomPayload.a, (new PacketDataSerializer(Unpooled.buffer())).a(this.getServer().getServerModName())));
-         playerconnection.sendPacket(new PacketPlayOutServerDifficulty(worlddata.getDifficulty(), worlddata.isDifficultyLocked()));
-@@ -833,7 +833,10 @@ public abstract class PlayerList {
+@@ -845,7 +845,10 @@ public abstract class PlayerList {
          // CraftBukkit start
          WorldData worlddata = worldserver1.getWorldData();
-         entityplayer1.playerConnection.sendPacket(new PacketPlayOutRespawn(worldserver1.getTypeKey(), worldserver1.getDimensionKey(), BiomeManager.a(worldserver1.getSeed()), entityplayer1.playerInteractManager.getGameMode(), entityplayer1.playerInteractManager.c(), worldserver1.isDebugWorld(), worldserver1.isFlatWorld(), flag));
+         entityplayer1.playerConnection.sendPacket(new PacketPlayOutRespawn(worldserver1.getDimensionManager(), worldserver1.getDimensionKey(), BiomeManager.a(worldserver1.getSeed()), entityplayer1.playerInteractManager.getGameMode(), entityplayer1.playerInteractManager.c(), worldserver1.isDebugWorld(), worldserver1.isFlatWorld(), flag));
 -        entityplayer1.playerConnection.sendPacket(new PacketPlayOutViewDistance(worldserver1.getChunkProvider().playerChunkMap.getLoadViewDistance())); // Spigot // Paper - no-tick view distance
 +        // Nabulus start - Respect client view distance
 +        //entityplayer1.playerConnection.sendPacket(new PacketPlayOutViewDistance(worldserver1.getChunkProvider().playerChunkMap.getLoadViewDistance())); // Spigot // Paper - no-tick view distance

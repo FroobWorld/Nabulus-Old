@@ -1,21 +1,21 @@
-From 22d58317b47eb41e1cee0ece50ac5ed52a65fd94 Mon Sep 17 00:00:00 2001
+From 9ec1a5716fff1b6180882223a6e92952923606f9 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Mon, 13 Apr 2020 16:11:11 +0930
 Subject: [PATCH] Don't process idle hoppers
 
 ---
  .../net/minecraft/server/BlockComposter.java  |  16 +++
- src/main/java/net/minecraft/server/Chunk.java |  11 +-
+ src/main/java/net/minecraft/server/Chunk.java |  10 +-
  .../java/net/minecraft/server/TileEntity.java |  15 ++
  .../minecraft/server/TileEntityHopper.java    | 136 +++++++++++++++++-
  src/main/java/net/minecraft/server/World.java |   1 +
- 5 files changed, 170 insertions(+), 9 deletions(-)
+ 5 files changed, 169 insertions(+), 9 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/BlockComposter.java b/src/main/java/net/minecraft/server/BlockComposter.java
-index 83b80e25f..405788663 100644
+index ccb61d656..aac5e8033 100644
 --- a/src/main/java/net/minecraft/server/BlockComposter.java
 +++ b/src/main/java/net/minecraft/server/BlockComposter.java
-@@ -251,6 +251,14 @@ public class BlockComposter extends Block implements IInventoryHolder {
+@@ -250,6 +250,14 @@ public class BlockComposter extends Block implements IInventoryHolder {
          if ((Integer) iblockdata.get(BlockComposter.a) == 7) {
              worldserver.setTypeAndData(blockposition, (IBlockData) iblockdata.a((IBlockState) BlockComposter.a), 3);
              worldserver.playSound((EntityHuman) null, blockposition, SoundEffects.BLOCK_COMPOSTER_READY, SoundCategory.BLOCKS, 1.0F, 1.0F);
@@ -30,7 +30,7 @@ index 83b80e25f..405788663 100644
          }
  
      }
-@@ -379,6 +387,14 @@ public class BlockComposter extends Block implements IInventoryHolder {
+@@ -378,6 +386,14 @@ public class BlockComposter extends Block implements IInventoryHolder {
                  this.emptied = false;
              }
              // CraftBukkit end
@@ -46,10 +46,10 @@ index 83b80e25f..405788663 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 09b8f9a3f..2ef17c043 100644
+index ac6e5e330..fdb1422c1 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
-@@ -87,10 +87,15 @@ public class Chunk implements IChunkAccess {
+@@ -87,10 +87,14 @@ public class Chunk implements IChunkAccess {
      }
      // Track the number of minecarts and items
      // Keep this synced with entitySlices.add() and entitySlices.remove()
@@ -63,11 +63,10 @@ index 09b8f9a3f..2ef17c043 100644
 +    public final int[] inventoryUpdateTickSlices = new int[256];
 +    public static int lastUnknownInventoryUpdate = 0;
 +    //Nabulus end
-+
-     // Paper start - optimise hard collision handling
+     // Tuinity start - optimise hard collision handling
      final com.destroystokyo.paper.util.maplist.EntityList[] hardCollidingEntities = new com.destroystokyo.paper.util.maplist.EntityList[16];
  
-@@ -675,8 +680,10 @@ public class Chunk implements IChunkAccess {
+@@ -645,8 +649,10 @@ public class Chunk implements IChunkAccess {
          // Paper start
          if (entity instanceof EntityItem) {
              itemCounts[k]++;
@@ -79,10 +78,10 @@ index 09b8f9a3f..2ef17c043 100644
          // Paper end
          entity.entitySlice = this.entitySlices[k]; // Paper
 diff --git a/src/main/java/net/minecraft/server/TileEntity.java b/src/main/java/net/minecraft/server/TileEntity.java
-index e1f1d6e33..053270c97 100644
+index d32540c88..c6114c073 100644
 --- a/src/main/java/net/minecraft/server/TileEntity.java
 +++ b/src/main/java/net/minecraft/server/TileEntity.java
-@@ -186,6 +186,16 @@ public abstract class TileEntity implements KeyedObject, Cloneable { // Paper //
+@@ -142,6 +142,16 @@ public abstract class TileEntity implements KeyedObject { // Paper
  
      public void update() {
          if (this.world != null) {
@@ -99,7 +98,7 @@ index e1f1d6e33..053270c97 100644
              if (IGNORE_TILE_UPDATES) return; // Paper
              this.c = this.world.getType(this.position);
              this.world.b(this.position, this);
-@@ -193,6 +203,11 @@ public abstract class TileEntity implements KeyedObject, Cloneable { // Paper //
+@@ -149,6 +159,11 @@ public abstract class TileEntity implements KeyedObject { // Paper
                  this.world.updateAdjacentComparators(this.position, this.c.getBlock());
              }
          }
@@ -112,7 +111,7 @@ index e1f1d6e33..053270c97 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/TileEntityHopper.java b/src/main/java/net/minecraft/server/TileEntityHopper.java
-index 20df9bd21..b8a638dfb 100644
+index d432de40e..9fb16c981 100644
 --- a/src/main/java/net/minecraft/server/TileEntityHopper.java
 +++ b/src/main/java/net/minecraft/server/TileEntityHopper.java
 @@ -52,6 +52,99 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper, ITi
@@ -310,7 +309,7 @@ index 20df9bd21..b8a638dfb 100644
  
          if (iinventory != null) {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 4a956f368..253436ada 100644
+index a490662e0..cbdc7961b 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -118,6 +118,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
@@ -319,8 +318,8 @@ index 4a956f368..253436ada 100644
      // Paper end
 +    public int lastItemInventorySliceMove; // Nabulus - Don't process idle hoppers
  
-     protected World(WorldDataMutable worlddatamutable, ResourceKey<World> resourcekey, ResourceKey<DimensionManager> resourcekey1, DimensionManager dimensionmanager, Supplier<GameProfilerFiller> supplier, boolean flag, boolean flag1, long i, org.bukkit.generator.ChunkGenerator gen, org.bukkit.World.Environment env, java.util.concurrent.Executor executor) {
-         this.spigotConfig = new org.spigotmc.SpigotWorldConfig(((WorldDataServer) worlddatamutable).getName()); // Spigot
+     public ResourceKey<DimensionManager> getTypeKey() {
+         return typeKey;
 -- 
 2.26.2
 

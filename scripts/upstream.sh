@@ -11,7 +11,7 @@ done
 if [[ "$1" == up* ]]; then
 	(
 		cd "$basedir/Tuinity/"
-		git fetch && git reset --hard origin/ver/1.16
+		git fetch && git reset --hard origin
 		cd ../
 		git add Tuinity
 	)

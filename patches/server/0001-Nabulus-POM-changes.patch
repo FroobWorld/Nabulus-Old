@@ -1,4 +1,4 @@
-From 025ab5557032935be7cfa5b97eb3400e8e0e1df7 Mon Sep 17 00:00:00 2001
+From 7ca35191c88a9ebf4d376dd71944b528970796b5 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@gmail.com>
 Date: Mon, 13 Apr 2020 00:16:08 +0100
 Subject: [PATCH] Nabulus POM changes
@@ -9,17 +9,17 @@ Subject: [PATCH] Nabulus POM changes
  2 files changed, 13 insertions(+), 9 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index 6fd59681..1f6b7e87 100644
+index f009b05e4..3027a1afc 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,11 +1,11 @@
-  <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
      <modelVersion>4.0.0</modelVersion>
 -    <artifactId>tuinity</artifactId>
 +    <artifactId>nabulus</artifactId>
      <packaging>jar</packaging>
-     <version>1.16.1-R0.1-SNAPSHOT</version>
+     <version>1.16.3-R0.1-SNAPSHOT</version>
 -    <name>Tuinity-Server</name>
 -    <url>https://github.com/Spottedleaf/Tuinity</url>
 +    <name>Nabulus</name>
@@ -69,7 +69,7 @@ index 6fd59681..1f6b7e87 100644
                  </configuration>
                  <executions>
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
-index 001b1e51..746fd4ed 100644
+index 001b1e519..746fd4ed8 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 @@ -11,7 +11,7 @@ public final class Versioning {
