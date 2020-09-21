@@ -1,4 +1,4 @@
-From 849362782a583d24260b4e5f893c482983e6eaa6 Mon Sep 17 00:00:00 2001
+From 81eca85f512eb81023022b0002683c45f58878d8 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Wed, 20 May 2020 16:26:35 +0930
 Subject: [PATCH] Respect client view distance
@@ -22,7 +22,7 @@ index 11fa231ca..8608b2529 100644
          this.bY = packetplayinsettings.d();
          this.bZ = packetplayinsettings.e();
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index d2d587581..a19404c01 100644
+index 087388da9..dc5d55a1b 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -222,7 +222,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
@@ -68,7 +68,7 @@ index d2d587581..a19404c01 100644
  
      // Tuinity start
      public static enum RegionData implements com.tuinity.tuinity.chunk.SingleThreadChunkRegionManager.RegionDataCreator<RegionData> {
-@@ -1569,7 +1590,10 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -1592,7 +1613,10 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
                  PlayerConnection connection = player.playerConnection;
                  if (connection != null) {
                      // moved in from PlayerList
