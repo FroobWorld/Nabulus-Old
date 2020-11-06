@@ -7,6 +7,12 @@
     <packaging>pom</packaging>
     <name>Nabulus (Parent)</name>
 
+    <repositories>
+        <repository>
+            <id>velocity-snapshots</id>
+            <url>https://nexus.velocitypowered.com/repository/velocity-artifacts-snapshots/</url>
+        </repository>
+    </repositories>
     <build>
         <defaultGoal>install</defaultGoal>
         <finalName>${project.artifactId}</finalName>

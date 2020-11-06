@@ -1,4 +1,4 @@
-From 81eca85f512eb81023022b0002683c45f58878d8 Mon Sep 17 00:00:00 2001
+From f5df4c86e8ff650e8e0580d5edb2741dec46a2d1 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Wed, 20 May 2020 16:26:35 +0930
 Subject: [PATCH] Respect client view distance
@@ -10,10 +10,10 @@ Subject: [PATCH] Respect client view distance
  3 files changed, 33 insertions(+), 5 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index 11fa231ca..8608b2529 100644
+index 56677b8bf..efcc872cb 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
-@@ -1697,6 +1697,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+@@ -1700,6 +1700,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
          }
          this.locale = packetplayinsettings.locale;
          this.clientViewDistance = packetplayinsettings.viewDistance;
@@ -22,10 +22,10 @@ index 11fa231ca..8608b2529 100644
          this.bY = packetplayinsettings.d();
          this.bZ = packetplayinsettings.e();
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 087388da9..dc5d55a1b 100644
+index 2a8455b81..39a61cad1 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-@@ -222,7 +222,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -225,7 +225,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
          }
  
          player.needsChunkCenterUpdate = true;
@@ -33,8 +33,8 @@ index 087388da9..dc5d55a1b 100644
 +        this.playerViewDistanceBroadcastMap.add(player, chunkX, chunkZ, getBroadcastViewDistance(player) + 1); // clients need an extra neighbour to render the full view distance configured
          player.needsChunkCenterUpdate = false;
          // Paper end - no-tick view distance
-     }
-@@ -271,11 +271,32 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+         // Tuinity start - optimise checkDespawn
+@@ -280,7 +280,11 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
          }
  
          player.needsChunkCenterUpdate = true;
@@ -46,6 +46,9 @@ index 087388da9..dc5d55a1b 100644
 +        // Nabulus end
          player.needsChunkCenterUpdate = false;
          // Paper end - no-tick view distance
+         // Tuinity start - optimise checkDespawn
+@@ -288,6 +292,23 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+         // Tuinity end - optimise checkDespawn
      }
      // Paper end
 +    //Nabulus start - Respect client render distance
@@ -68,7 +71,7 @@ index 087388da9..dc5d55a1b 100644
  
      // Tuinity start
      public static enum RegionData implements com.tuinity.tuinity.chunk.SingleThreadChunkRegionManager.RegionDataCreator<RegionData> {
-@@ -1592,7 +1613,10 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -1590,7 +1611,10 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
                  PlayerConnection connection = player.playerConnection;
                  if (connection != null) {
                      // moved in from PlayerList
@@ -81,7 +84,7 @@ index 087388da9..dc5d55a1b 100644
                  this.updateMaps(player);
              }
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 787e80c50..b6d7551f9 100644
+index 38f26e25c..e2397d323 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -186,7 +186,7 @@ public abstract class PlayerList {
@@ -93,7 +96,7 @@ index 787e80c50..b6d7551f9 100644
          entityplayer.getBukkitEntity().sendSupportedChannels(); // CraftBukkit
          playerconnection.sendPacket(new PacketPlayOutCustomPayload(PacketPlayOutCustomPayload.a, (new PacketDataSerializer(Unpooled.buffer())).a(this.getServer().getServerModName())));
          playerconnection.sendPacket(new PacketPlayOutServerDifficulty(worlddata.getDifficulty(), worlddata.isDifficultyLocked()));
-@@ -845,7 +845,10 @@ public abstract class PlayerList {
+@@ -848,7 +848,10 @@ public abstract class PlayerList {
          // CraftBukkit start
          WorldData worlddata = worldserver1.getWorldData();
          entityplayer1.playerConnection.sendPacket(new PacketPlayOutRespawn(worldserver1.getDimensionManager(), worldserver1.getDimensionKey(), BiomeManager.a(worldserver1.getSeed()), entityplayer1.playerInteractManager.getGameMode(), entityplayer1.playerInteractManager.c(), worldserver1.isDebugWorld(), worldserver1.isFlatWorld(), flag));
