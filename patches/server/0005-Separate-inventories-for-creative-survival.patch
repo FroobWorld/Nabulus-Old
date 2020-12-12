@@ -1,4 +1,4 @@
-From 1060f4e2ba55f2ef049525d5e224bbaa4d4a0487 Mon Sep 17 00:00:00 2001
+From 67a90bd9b00ea58f294daa4eb4de1ccc88f2d59c Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Sat, 12 Dec 2020 15:45:30 +0930
 Subject: [PATCH] Separate inventories for creative / survival
@@ -69,10 +69,10 @@ index caaa01b20..660c1af9f 100644
          nbttagcompound.setFloat("XpP", this.exp);
          nbttagcompound.setInt("XpLevel", this.expLevel);
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index efcc872cb..2ba206289 100644
+index 7b8a189f1..0088a9a6b 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
-@@ -1628,6 +1628,23 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+@@ -1629,6 +1629,23 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
          if (enumgamemode == this.playerInteractManager.getGameMode()) {
              return;
          }
