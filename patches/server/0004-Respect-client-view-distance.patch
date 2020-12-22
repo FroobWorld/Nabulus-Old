@@ -1,4 +1,4 @@
-From 61b695c97edb4525c2e81baf989b0287800ba9c0 Mon Sep 17 00:00:00 2001
+From 0c333f2eda3e32e730399d26e5908b5ef3d6827f Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Wed, 20 May 2020 16:26:35 +0930
 Subject: [PATCH] Respect client view distance
@@ -10,10 +10,10 @@ Subject: [PATCH] Respect client view distance
  3 files changed, 33 insertions(+), 5 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index 976c44c8e..7b8a189f1 100644
+index 7240b885d..482b77081 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
-@@ -1701,6 +1701,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+@@ -1703,6 +1703,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
          }
          this.locale = packetplayinsettings.locale;
          this.clientViewDistance = packetplayinsettings.viewDistance;
