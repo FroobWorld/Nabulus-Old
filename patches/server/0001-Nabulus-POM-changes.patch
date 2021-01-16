@@ -1,4 +1,4 @@
-From c8af5c2d571701451212e292a5d86cdd47cabf02 Mon Sep 17 00:00:00 2001
+From 1b16844795f5e3b7750f666197bdda72d2259741 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@gmail.com>
 Date: Mon, 13 Apr 2020 00:16:08 +0100
 Subject: [PATCH] Nabulus POM changes
@@ -9,7 +9,7 @@ Subject: [PATCH] Nabulus POM changes
  2 files changed, 13 insertions(+), 9 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index 78c2a8bbc..9882786ea 100644
+index e83e4241a..916a37561 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,11 +1,11 @@
@@ -19,7 +19,7 @@ index 78c2a8bbc..9882786ea 100644
 -    <artifactId>tuinity</artifactId>
 +    <artifactId>nabulus</artifactId>
      <packaging>jar</packaging>
-     <version>1.16.4-R0.1-SNAPSHOT</version>
+     <version>1.16.5-R0.1-SNAPSHOT</version>
 -    <name>Tuinity-Server</name>
 -    <url>https://github.com/Spottedleaf/Tuinity</url>
 +    <name>Nabulus</name>
@@ -27,7 +27,7 @@ index 78c2a8bbc..9882786ea 100644
  
      <properties>
          <!-- <skipTests>true</skipTests> Paper - This [was] not going to end well -->
-@@ -18,16 +18,16 @@
+@@ -19,16 +19,16 @@
      </properties>
  
      <parent>
@@ -48,7 +48,7 @@ index 78c2a8bbc..9882786ea 100644
              <version>${project.version}</version>
              <scope>compile</scope>
          </dependency>
-@@ -164,6 +164,10 @@
+@@ -172,6 +172,10 @@
              <id>spigotmc-public</id>
              <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
          </repository>
@@ -59,7 +59,7 @@ index 78c2a8bbc..9882786ea 100644
      </repositories>
  
      <pluginRepositories>
-@@ -183,7 +187,7 @@
+@@ -191,7 +195,7 @@
                  <artifactId>gitdescribe-maven-plugin</artifactId>
                  <version>1.3</version>
                  <configuration>
@@ -82,5 +82,5 @@ index 001b1e519..746fd4ed8 100644
  
          if (stream != null) {
 -- 
-2.26.2
+2.29.2
 

@@ -1,4 +1,4 @@
-From f5bda92ac76c93be5c8ac719a62ec9d461963d43 Mon Sep 17 00:00:00 2001
+From 2bb641c3371df2e8e1ccb1f61e1462dda179af73 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Mon, 13 Apr 2020 16:11:11 +0930
 Subject: [PATCH] Don't process idle hoppers
@@ -46,7 +46,7 @@ index ccb61d656..aac5e8033 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index f3702ed75..da84d9d39 100644
+index 781d74cf7..61524b14c 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -87,10 +87,14 @@ public class Chunk implements IChunkAccess {
@@ -66,7 +66,7 @@ index f3702ed75..da84d9d39 100644
      // Tuinity start - optimise hard collision handling
      final com.destroystokyo.paper.util.maplist.EntityList[] hardCollidingEntities = new com.destroystokyo.paper.util.maplist.EntityList[16];
  
-@@ -743,8 +747,10 @@ public class Chunk implements IChunkAccess {
+@@ -744,8 +748,10 @@ public class Chunk implements IChunkAccess {
          // Paper start
          if (entity instanceof EntityItem) {
              itemCounts[k]++;
@@ -309,7 +309,7 @@ index d432de40e..9fb16c981 100644
  
          if (iinventory != null) {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index f7103ec2a..639a80eeb 100644
+index 28ee325fc..1b14b6d51 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -118,6 +118,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
@@ -321,5 +321,5 @@ index f7103ec2a..639a80eeb 100644
      public ResourceKey<DimensionManager> getTypeKey() {
          return typeKey;
 -- 
-2.26.2
+2.29.2
 

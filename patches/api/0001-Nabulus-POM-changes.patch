@@ -1,4 +1,4 @@
-From 32ba06678c4ad9f580c96ade52e03986c57cf096 Mon Sep 17 00:00:00 2001
+From deb05d934c77836c972b5fc6512b0ab737f59b87 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Thu, 7 May 2020 10:13:28 +0930
 Subject: [PATCH] Nabulus POM changes
@@ -8,7 +8,7 @@ Subject: [PATCH] Nabulus POM changes
  1 file changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/pom.xml b/pom.xml
-index 4516ba097..629458d3f 100644
+index c441d455..a8821362 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -3,18 +3,19 @@
@@ -26,7 +26,7 @@ index 4516ba097..629458d3f 100644
 -    <artifactId>tuinity-api</artifactId>
 +    <groupId>com.froobworld</groupId>
 +    <artifactId>nabulus-api</artifactId>
-     <version>1.16.4-R0.1-SNAPSHOT</version>
+     <version>1.16.5-R0.1-SNAPSHOT</version>
      <packaging>jar</packaging>
  
 -    <name>Tuinity-API</name>
@@ -37,5 +37,5 @@ index 4516ba097..629458d3f 100644
  
      <properties>
 -- 
-2.26.2
+2.29.2
 

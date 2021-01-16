@@ -1,4 +1,4 @@
-From 0c333f2eda3e32e730399d26e5908b5ef3d6827f Mon Sep 17 00:00:00 2001
+From 3bc76c7ca7523c4be699781ffbc9e80ecb828e69 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Wed, 20 May 2020 16:26:35 +0930
 Subject: [PATCH] Respect client view distance
@@ -10,7 +10,7 @@ Subject: [PATCH] Respect client view distance
  3 files changed, 33 insertions(+), 5 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index 7240b885d..482b77081 100644
+index 04d505c7a..6dc4058d5 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
 @@ -1703,6 +1703,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
@@ -22,7 +22,7 @@ index 7240b885d..482b77081 100644
          this.bY = packetplayinsettings.d();
          this.bZ = packetplayinsettings.e();
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 8286039c4..714857672 100644
+index 533a407a2..d725c5add 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -225,7 +225,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
@@ -84,7 +84,7 @@ index 8286039c4..714857672 100644
                  this.updateMaps(player);
              }
 diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
-index 70f702680..6c6c842c2 100644
+index 4bc9b3b08..db12a777c 100644
 --- a/src/main/java/net/minecraft/server/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/PlayerList.java
 @@ -186,7 +186,7 @@ public abstract class PlayerList {
@@ -96,7 +96,7 @@ index 70f702680..6c6c842c2 100644
          entityplayer.getBukkitEntity().sendSupportedChannels(); // CraftBukkit
          playerconnection.sendPacket(new PacketPlayOutCustomPayload(PacketPlayOutCustomPayload.a, (new PacketDataSerializer(Unpooled.buffer())).a(this.getServer().getServerModName())));
          playerconnection.sendPacket(new PacketPlayOutServerDifficulty(worlddata.getDifficulty(), worlddata.isDifficultyLocked()));
-@@ -848,7 +848,10 @@ public abstract class PlayerList {
+@@ -857,7 +857,10 @@ public abstract class PlayerList {
          // CraftBukkit start
          WorldData worlddata = worldserver1.getWorldData();
          entityplayer1.playerConnection.sendPacket(new PacketPlayOutRespawn(worldserver1.getDimensionManager(), worldserver1.getDimensionKey(), BiomeManager.a(worldserver1.getSeed()), entityplayer1.playerInteractManager.getGameMode(), entityplayer1.playerInteractManager.c(), worldserver1.isDebugWorld(), worldserver1.isFlatWorld(), flag));
@@ -109,5 +109,5 @@ index 70f702680..6c6c842c2 100644
          entityplayer1.dead = false;
          entityplayer1.playerConnection.teleport(new Location(worldserver1.getWorld(), entityplayer1.locX(), entityplayer1.locY(), entityplayer1.locZ(), entityplayer1.yaw, entityplayer1.pitch));
 -- 
-2.26.2
+2.29.2
 
