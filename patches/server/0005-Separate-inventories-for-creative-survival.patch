@@ -1,4 +1,4 @@
-From 569912ed9620847a53539d34a5d60f6bf245d450 Mon Sep 17 00:00:00 2001
+From 2eec55f765fb1933bff8ada816995b6b57c49b94 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Sat, 12 Dec 2020 15:45:30 +0930
 Subject: [PATCH] Separate inventories for creative / survival
@@ -9,7 +9,7 @@ Subject: [PATCH] Separate inventories for creative / survival
  2 files changed, 38 insertions(+), 6 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 3ef463e13..c204830e9 100644
+index 9796b4e57..77c35b223 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
 @@ -41,9 +41,13 @@ public abstract class EntityHuman extends EntityLiving {
@@ -69,10 +69,10 @@ index 3ef463e13..c204830e9 100644
          nbttagcompound.setFloat("XpP", this.exp);
          nbttagcompound.setInt("XpLevel", this.expLevel);
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index 482b77081..54ec8b73a 100644
+index 662054df6..f03d25607 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
-@@ -1631,6 +1631,23 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+@@ -1810,6 +1810,23 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
          if (enumgamemode == this.playerInteractManager.getGameMode()) {
              return;
          }
@@ -97,5 +97,5 @@ index 482b77081..54ec8b73a 100644
          PlayerGameModeChangeEvent event = new PlayerGameModeChangeEvent(getBukkitEntity(), GameMode.getByValue(enumgamemode.getId()));
          world.getServer().getPluginManager().callEvent(event);
 -- 
-2.26.2
+2.29.2
 

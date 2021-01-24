@@ -1,4 +1,4 @@
-From 2bb641c3371df2e8e1ccb1f61e1462dda179af73 Mon Sep 17 00:00:00 2001
+From 0fc826ff6ea71bfbb248a30a7d116c9eb9691173 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Mon, 13 Apr 2020 16:11:11 +0930
 Subject: [PATCH] Don't process idle hoppers
@@ -46,7 +46,7 @@ index ccb61d656..aac5e8033 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 781d74cf7..61524b14c 100644
+index ae07ea2a3..aa5cd4528 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -87,10 +87,14 @@ public class Chunk implements IChunkAccess {
@@ -66,7 +66,7 @@ index 781d74cf7..61524b14c 100644
      // Tuinity start - optimise hard collision handling
      final com.destroystokyo.paper.util.maplist.EntityList[] hardCollidingEntities = new com.destroystokyo.paper.util.maplist.EntityList[16];
  
-@@ -744,8 +748,10 @@ public class Chunk implements IChunkAccess {
+@@ -796,8 +800,10 @@ public class Chunk implements IChunkAccess {
          // Paper start
          if (entity instanceof EntityItem) {
              itemCounts[k]++;
