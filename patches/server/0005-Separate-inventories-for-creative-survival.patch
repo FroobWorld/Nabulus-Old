@@ -1,4 +1,4 @@
-From 2eec55f765fb1933bff8ada816995b6b57c49b94 Mon Sep 17 00:00:00 2001
+From 248d379021de3d3790f0884fda0670363275fdad Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Sat, 12 Dec 2020 15:45:30 +0930
 Subject: [PATCH] Separate inventories for creative / survival
@@ -9,10 +9,10 @@ Subject: [PATCH] Separate inventories for creative / survival
  2 files changed, 38 insertions(+), 6 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 9796b4e57..77c35b223 100644
+index 59b00c78f..4fbd4341b 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
-@@ -41,9 +41,13 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -39,9 +39,13 @@ public abstract class EntityHuman extends EntityLiving {
      protected static final DataWatcherObject<NBTTagCompound> bk = DataWatcher.a(EntityHuman.class, DataWatcherRegistry.p);
      protected static final DataWatcherObject<NBTTagCompound> bl = DataWatcher.a(EntityHuman.class, DataWatcherRegistry.p);
      private long e;
@@ -28,7 +28,7 @@ index 9796b4e57..77c35b223 100644
      public Container activeContainer;
      protected FoodMetaData foodData = new FoodMetaData(this); // CraftBukkit - add "this" to constructor
      protected int br;
-@@ -90,6 +94,7 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -88,6 +92,7 @@ public abstract class EntityHuman extends EntityLiving {
          this.bM = this.i();
          this.a_(a(gameprofile));
          this.bJ = gameprofile;
@@ -36,7 +36,7 @@ index 9796b4e57..77c35b223 100644
          this.defaultContainer = new ContainerPlayer(this.inventory, !world.isClientSide, this);
          this.activeContainer = this.defaultContainer;
          this.setPositionRotation((double) blockposition.getX() + 0.5D, (double) (blockposition.getY() + 1), (double) blockposition.getZ() + 0.5D, f, 0.0F);
-@@ -671,8 +676,15 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -669,8 +674,15 @@ public abstract class EntityHuman extends EntityLiving {
          this.a_(a(this.bJ));
          NBTTagList nbttaglist = nbttagcompound.getList("Inventory", 10);
  
@@ -54,7 +54,7 @@ index 9796b4e57..77c35b223 100644
          this.sleepTicks = nbttagcompound.getShort("SleepTimer");
          this.exp = nbttagcompound.getFloat("XpP");
          this.expLevel = nbttagcompound.getInt("XpLevel");
-@@ -704,8 +716,11 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -702,8 +714,11 @@ public abstract class EntityHuman extends EntityLiving {
      public void saveData(NBTTagCompound nbttagcompound) {
          super.saveData(nbttagcompound);
          nbttagcompound.setInt("DataVersion", SharedConstants.getGameVersion().getWorldVersion());
@@ -69,10 +69,10 @@ index 9796b4e57..77c35b223 100644
          nbttagcompound.setFloat("XpP", this.exp);
          nbttagcompound.setInt("XpLevel", this.expLevel);
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index 662054df6..f03d25607 100644
+index 8c74b7e23..500929940 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
-@@ -1810,6 +1810,23 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+@@ -1833,6 +1833,23 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
          if (enumgamemode == this.playerInteractManager.getGameMode()) {
              return;
          }

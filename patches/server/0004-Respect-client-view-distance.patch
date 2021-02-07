@@ -1,4 +1,4 @@
-From c2b12e770506b6088f37c1a1891a2b27d0cbaf31 Mon Sep 17 00:00:00 2001
+From 87c05d465bdb1dafba34e21848b869b593931cf8 Mon Sep 17 00:00:00 2001
 From: froobynooby <froobynooby@froobworld.com>
 Date: Wed, 20 May 2020 16:26:35 +0930
 Subject: [PATCH] Respect client view distance
@@ -10,10 +10,10 @@ Subject: [PATCH] Respect client view distance
  3 files changed, 33 insertions(+), 5 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index 9f5b7243c..662054df6 100644
+index 173a21039..8c74b7e23 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
-@@ -1882,6 +1882,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+@@ -1905,6 +1905,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
          }
          this.locale = packetplayinsettings.locale;
          this.clientViewDistance = packetplayinsettings.viewDistance;
@@ -22,7 +22,7 @@ index 9f5b7243c..662054df6 100644
          this.bY = packetplayinsettings.d();
          this.bZ = packetplayinsettings.e();
 diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
-index 16779ffa0..a99b9dcc6 100644
+index a42571cfd..1146e042b 100644
 --- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
 @@ -225,7 +225,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
@@ -71,7 +71,7 @@ index 16779ffa0..a99b9dcc6 100644
  
      // Tuinity start
      public static enum RegionData implements com.tuinity.tuinity.chunk.SingleThreadChunkRegionManager.RegionDataCreator<RegionData> {
-@@ -1602,7 +1623,10 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -1603,7 +1624,10 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
                  PlayerConnection connection = player.playerConnection;
                  if (connection != null) {
                      // moved in from PlayerList
