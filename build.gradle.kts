@@ -44,7 +44,8 @@ paperweight {
   serverProject.set(project(":Byof-Server"))
 
   useStandardUpstream("tuinity") {
-    url.set("/tmp/Tuinity")
+    // url.set(github("Tuinity", "Tuinity"))
+    url.set("/tmp/Tuinity") // Change back after Tuinity updates Paperweight
     ref.set(providers.gradleProperty("tuinityRef"))
 
     withStandardPatcher {
