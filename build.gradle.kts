@@ -1,7 +1,7 @@
 plugins {
   java
   id("com.github.johnrengelman.shadow") version "7.0.0" apply false
-  id("io.papermc.paperweight.patcher") version "1.1.2"
+  id("io.papermc.paperweight.patcher") version "1.1.3-SNAPSHOT"
 }
 
 repositories {
@@ -44,14 +44,13 @@ paperweight {
   serverProject.set(project(":Byof-Server"))
 
   useStandardUpstream("tuinity") {
-    url.set(github("Tuinity", "Tuinity"))
+    url.set("/tmp/Tuinity")
     ref.set(providers.gradleProperty("tuinityRef"))
 
     withStandardPatcher {
       baseName("Tuinity")
 
       apiOutputDir.set(layout.projectDirectory.dir("Byof-API"))
-
       serverOutputDir.set(layout.projectDirectory.dir("Byof-Server"))
     }
   }
