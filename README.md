@@ -1,3 +1,7 @@
+# BYOF (Bring Your Own Fork)
+Based off of Tuinity instead of Paper.
+Uses Paperweight.
+
 ## Build Requirements
 
 Requirements:
@@ -13,10 +17,10 @@ To compile Byof, you need JDK 16 and an internet connection.
 
 Clone this repo and run `./gradlew applyPatches`.
 
-# Mojang-mapped jar
+## Mojang-mapped jar
 Run `./gradlew shadowJar` from your terminal. You can find the compiled jar in the `Byof-Server/build/libs` directory.
 
-# Reobfuscated Spigot-mapped jar
+## Reobfuscated Spigot-mapped jar
 Run `./gradlew reobfJar` from your terminal. You can find the compiled jar in the `Byof-Server/build/libs` directory.
 
 To get a full list of tasks, run `./gradlew tasks`.
