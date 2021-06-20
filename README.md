@@ -17,13 +17,13 @@ To compile Byof, you need JDK 16 and an internet connection.
 
 Clone this repo and run `./gradlew applyPatches`.
 
+To get a full list of tasks, run `./gradlew tasks`.
+
 ## Mojang-mapped jar
 Run `./gradlew shadowJar` from your terminal. You can find the compiled jar in the `Byof-Server/build/libs` directory.
 
 ## Reobfuscated Spigot-mapped jar
 Run `./gradlew reobfJar` from your terminal. You can find the compiled jar in the `Byof-Server/build/libs` directory.
-
-To get a full list of tasks, run `./gradlew tasks`.
 
 ## Rebranding
 
