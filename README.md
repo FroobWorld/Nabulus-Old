@@ -31,4 +31,6 @@ Run `./gradlew paperclipJar` from your terminal. You can find the compiled jar i
 ## Rebranding
 
 Replace mentions of Byof with your preferred fork name in `settings.gradle.kts`, `build.gradle.kts` & `.gitignore`.
-After applying patches, git rebase in `Byof-Server`, edit "Build changes" and replace all mentions of Byof with your fork name.
+Set the right package group name in `gradle.properties`
+
+After applying patches, git rebase in `<fork name>-Server`, edit "Build changes" and replace all mentions of Byof with your fork name. Replace `com.github.clrxbl.byof` in `Versioning.java` aswell.
