@@ -27,7 +27,7 @@ index 494c7e86f217f74e57a29a9628f9cf4b81927453..0eff936381c11a48f049446a3ada0f28
              "Specification-Title" to "Bukkit",
              "Specification-Version" to project.version,
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 5ae6a94542c1b6a5130567ab817360d8b2c2f33e..0221555e0df7bf9217897c7859a629ce977d510e 100644
+index 5ae6a94542c1b6a5130567ab817360d8b2c2f33e..639631248b49e38c80350f09a48d59f3e49cb4bd 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -1714,7 +1714,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
@@ -35,7 +35,7 @@ index 5ae6a94542c1b6a5130567ab817360d8b2c2f33e..0221555e0df7bf9217897c7859a629ce
      @DontObfuscate
      public String getServerModName() {
 -        return "Tuinity"; // Tuinity - Tuinity > //Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
-+        return "Tuinity"; // Byof - Byof > // Tuinity - Tuinity > //Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
++        return "Byof"; // Byof - Byof > // Tuinity - Tuinity > //Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
      }
  
      public SystemReport fillSystemReport(SystemReport systemreport) {
