@@ -26,7 +26,7 @@ Run `./gradlew shadowJar` from your terminal. You can find the compiled jar in t
 Run `./gradlew reobfJar` from your terminal. You can find the compiled jar in the `Byof-Server/build/libs` directory.
 
 ## Paperclip, reobfuscated Spigot-mapped jar
-Run `./gradlew paperclipJar` from your terminal. You can find the compiled jar in the `Byof-Server/build/libs` directory.
+Run `./gradlew paperclipJar` from your terminal. You can find the compiled jar in the `build/libs` directory.
 
 ## Rebranding
 
