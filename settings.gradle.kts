@@ -6,6 +6,6 @@ pluginManagement {
   }
 }
 
-rootProject.name = "Byof"
+rootProject.name = "Nabulus"
 
-include("Byof-API", "Byof-Server")
+include("Nabulus-API", "Nabulus-Server")
