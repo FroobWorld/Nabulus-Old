@@ -23,10 +23,10 @@ jobs:
         run: |
           git config --global user.email "no-reply@github.com"
           git config --global user.name "Github Actions"
-      - name: Patch Tuinity
+      - name: Patch Nabulus
         run: |
           ./gradlew applyPatches --stacktrace --no-daemon
-      - name: Build Tuinity
+      - name: Build Nabulus
         run: |
           ./gradlew build --stacktrace --no-daemon
           ./gradlew paperclipJar --stacktrace --no-daemon
