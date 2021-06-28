@@ -5,7 +5,7 @@ Subject: [PATCH] Separate inventory for creative
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index c72f47328a6982145c6dd97a342e6d99becb2052..488cdd2bb2000758aab809e83f74978a4104d409 100644
+index 217af30c81438836864312e125cf512b491a3ab4..676dc04c3d0b25964925d71a1672a355bcb32bbb 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
 @@ -95,15 +95,11 @@ import net.minecraft.world.entity.animal.horse.AbstractHorse;
@@ -63,7 +63,7 @@ index c72f47328a6982145c6dd97a342e6d99becb2052..488cdd2bb2000758aab809e83f74978a
          }
      }
 diff --git a/src/main/java/net/minecraft/world/entity/player/Player.java b/src/main/java/net/minecraft/world/entity/player/Player.java
-index 8e85b828b4b73cd4ec321ba5bd85187a5d19134a..1223beff3cbcd7c764e25ba8fe0a6d0c79a96124 100644
+index 069f658003d96a05aac0b30af1d89f15ea554475..d0fa22177a82fe98e0e8128ce22afcd7c8e49acb 100644
 --- a/src/main/java/net/minecraft/world/entity/player/Player.java
 +++ b/src/main/java/net/minecraft/world/entity/player/Player.java
 @@ -149,9 +149,14 @@ public abstract class Player extends LivingEntity {
@@ -91,7 +91,7 @@ index 8e85b828b4b73cd4ec321ba5bd85187a5d19134a..1223beff3cbcd7c764e25ba8fe0a6d0c
          this.inventoryMenu = new InventoryMenu(this.inventory, !world.isClientSide, this);
          this.containerMenu = this.inventoryMenu;
          this.moveTo((double) pos.getX() + 0.5D, (double) (pos.getY() + 1), (double) pos.getZ() + 0.5D, yaw, 0.0F);
-@@ -831,9 +837,16 @@ public abstract class Player extends LivingEntity {
+@@ -836,9 +842,16 @@ public abstract class Player extends LivingEntity {
          super.readAdditionalSaveData(nbt);
          this.setUUID(Player.createPlayerUUID(this.gameProfile));
          ListTag nbttaglist = nbt.getList("Inventory", 10);
@@ -109,7 +109,7 @@ index 8e85b828b4b73cd4ec321ba5bd85187a5d19134a..1223beff3cbcd7c764e25ba8fe0a6d0c
          this.sleepCounter = nbt.getShort("SleepTimer");
          this.experienceProgress = nbt.getFloat("XpP");
          this.experienceLevel = nbt.getInt("XpLevel");
-@@ -865,7 +878,11 @@ public abstract class Player extends LivingEntity {
+@@ -870,7 +883,11 @@ public abstract class Player extends LivingEntity {
      public void addAdditionalSaveData(CompoundTag nbt) {
          super.addAdditionalSaveData(nbt);
          nbt.putInt("DataVersion", SharedConstants.getCurrentVersion().getWorldVersion());
