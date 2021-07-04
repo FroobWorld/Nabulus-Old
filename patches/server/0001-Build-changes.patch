@@ -5,10 +5,10 @@ Subject: [PATCH] Build changes
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index c2005f46b6cf2d7f80f65dc52f9ff7cd03d0419f..a9ba19691064272203712bd01112d3215432d9bb 100644
+index ab8de6c4e3c0bea2b9f498da00adf88e987d2364..79f12ec7efd41b00ba81871b7d3854525f65fedd 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -30,7 +30,7 @@ repositories {
+@@ -36,7 +36,7 @@ repositories {
  }
  
  dependencies {
@@ -17,7 +17,7 @@ index c2005f46b6cf2d7f80f65dc52f9ff7cd03d0419f..a9ba19691064272203712bd01112d321
      implementation("com.destroystokyo.paper:paper-mojangapi:1.16.5-R0.1-SNAPSHOT") // Tuinity
      // Paper start
      implementation("org.jline:jline-terminal-jansi:3.12.1")
-@@ -82,7 +82,7 @@ tasks.jar {
+@@ -88,7 +88,7 @@ tasks.jar {
          attributes(
              "Main-Class" to "org.bukkit.craftbukkit.Main",
              "Implementation-Title" to "CraftBukkit",
@@ -40,7 +40,7 @@ index f3bf6270c7735869083559f907c65d95144dbe6f..4f768f02c0d7fdef3a24455f76e549c9
  
      public SystemReport fillSystemReport(SystemReport systemreport) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 2aa45667054a721465f353f0500e30d90f7d16a4..beef9acc63e8562540d7eaaac0d07bc5abf98598 100644
+index 130a088e694b85f7d56620352f044161ea56caf3..6c507e834ad18e5f6fc7cc4760b9f4d367274141 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -230,7 +230,7 @@ import javax.annotation.Nullable; // Paper
