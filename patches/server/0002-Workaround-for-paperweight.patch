@@ -1,0 +1,36 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: froobynooby <froobynooby@froobworld.com>
+Date: Sat, 10 Jul 2021 09:21:43 +0930
+Subject: [PATCH] Workaround for paperweight
+
+
+diff --git a/build.gradle.kts b/build.gradle.kts
+index 79f12ec7efd41b00ba81871b7d3854525f65fedd..eecdd38c5bb85ced52ed46be6178d031a2fd5094 100644
+--- a/build.gradle.kts
++++ b/build.gradle.kts
+@@ -3,7 +3,7 @@ import com.github.jengelman.gradle.plugins.shadow.transformers.Transformer
+ import io.papermc.paperweight.tasks.BaseTask
+ import io.papermc.paperweight.tasks.GenerateReobfMappings
+ import io.papermc.paperweight.tasks.PatchMappings
+-import io.papermc.paperweight.util.Constants
++//import io.papermc.paperweight.util.Constants
+ import io.papermc.paperweight.util.Git
+ import io.papermc.paperweight.util.cache
+ import io.papermc.paperweight.util.defaultOutput
+@@ -112,7 +112,7 @@ publishing {
+         artifact(tasks.shadowJar)
+     }
+ }
+-
++/**
+ val generateReobfMappings = rootProject.tasks.named<GenerateReobfMappings>("generateReobfMappings")
+ 
+ val patchReobfMappings by tasks.registering<PatchMappings> {
+@@ -128,6 +128,7 @@ val patchReobfMappings by tasks.registering<PatchMappings> {
+ tasks.reobfJar {
+     mappingsFile.set(patchReobfMappings.flatMap { it.outputMappings })
+ }
++**/
+ 
+ val generatePom = tasks.named<GenerateMavenPom>("generatePomFileForMavenPublication")
+ 

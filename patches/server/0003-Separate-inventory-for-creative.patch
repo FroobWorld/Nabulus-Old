@@ -5,14 +5,10 @@ Subject: [PATCH] Separate inventory for creative
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 217af30c81438836864312e125cf512b491a3ab4..676dc04c3d0b25964925d71a1672a355bcb32bbb 100644
+index dcba69c0ad3288ddc64dacc58b6fb857eed3109c..895c349c6a14d7e0d198e8b66767e49b80c72ea0 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -95,15 +95,11 @@ import net.minecraft.world.entity.animal.horse.AbstractHorse;
- import net.minecraft.world.entity.item.ItemEntity;
- import net.minecraft.world.entity.monster.Monster;
- import net.minecraft.world.entity.player.ChatVisiblity;
-+import net.minecraft.world.entity.player.Inventory;
+@@ -104,12 +104,7 @@ import net.minecraft.world.entity.player.Inventory;
  import net.minecraft.world.entity.player.Player;
  import net.minecraft.world.entity.projectile.AbstractArrow;
  import net.minecraft.world.food.FoodData;
@@ -26,7 +22,7 @@ index 217af30c81438836864312e125cf512b491a3ab4..676dc04c3d0b25964925d71a1672a355
  import net.minecraft.world.item.ComplexItem;
  import net.minecraft.world.item.ItemCooldowns;
  import net.minecraft.world.item.ItemStack;
-@@ -258,6 +254,19 @@ public class ServerPlayer extends Player {
+@@ -264,6 +259,19 @@ public class ServerPlayer extends Player {
      public boolean needsChunkCenterUpdate; // Paper - no-tick view distance // Tuinity - public
      public org.bukkit.event.player.PlayerQuitEvent.QuitReason quitReason = null; // Paper - there are a lot of changes to do if we change all methods leading to the event
  
@@ -46,15 +42,15 @@ index 217af30c81438836864312e125cf512b491a3ab4..676dc04c3d0b25964925d71a1672a355
      public ServerPlayer(MinecraftServer server, ServerLevel world, GameProfile profile) {
          super(world, world.getSharedSpawnPos(), world.getSharedSpawnAngle(), profile);
          this.chatVisibility = ChatVisiblity.FULL;
-@@ -333,6 +342,7 @@ public class ServerPlayer extends Player {
+@@ -334,6 +342,7 @@ public class ServerPlayer extends Player {
          this.bukkitPickUpLoot = true;
          this.maxHealthCache = this.getMaxHealth();
          this.cachedSingleMobDistanceMap = new com.destroystokyo.paper.util.PooledHashSets.PooledObjectLinkedOpenHashSet<>(this); // Paper
-+        updateInventory(gameMode.getGameModeForPlayer()); // Nabulus
++        this.updateInventory(gameMode.getGameModeForPlayer()); // Nabulus
      }
      // Paper start - Chunk priority
      public BlockPos getPointInFront(double inFront) {
-@@ -1817,6 +1827,7 @@ public class ServerPlayer extends Player {
+@@ -1818,6 +1827,7 @@ public class ServerPlayer extends Player {
  
              this.onUpdateAbilities();
              this.updateEffectVisibility();
@@ -63,7 +59,7 @@ index 217af30c81438836864312e125cf512b491a3ab4..676dc04c3d0b25964925d71a1672a355
          }
      }
 diff --git a/src/main/java/net/minecraft/world/entity/player/Player.java b/src/main/java/net/minecraft/world/entity/player/Player.java
-index 069f658003d96a05aac0b30af1d89f15ea554475..d0fa22177a82fe98e0e8128ce22afcd7c8e49acb 100644
+index e7a7de5ad9b64876df77e20465631ca8e5b19a4a..8e6cdb65fac75b0694fcecbd90d538f48c68f274 100644
 --- a/src/main/java/net/minecraft/world/entity/player/Player.java
 +++ b/src/main/java/net/minecraft/world/entity/player/Player.java
 @@ -149,9 +149,14 @@ public abstract class Player extends LivingEntity {
@@ -91,11 +87,11 @@ index 069f658003d96a05aac0b30af1d89f15ea554475..d0fa22177a82fe98e0e8128ce22afcd7
          this.inventoryMenu = new InventoryMenu(this.inventory, !world.isClientSide, this);
          this.containerMenu = this.inventoryMenu;
          this.moveTo((double) pos.getX() + 0.5D, (double) (pos.getY() + 1), (double) pos.getZ() + 0.5D, yaw, 0.0F);
-@@ -836,9 +842,16 @@ public abstract class Player extends LivingEntity {
+@@ -832,8 +838,13 @@ public abstract class Player extends LivingEntity {
          super.readAdditionalSaveData(nbt);
          this.setUUID(Player.createPlayerUUID(this.gameProfile));
          ListTag nbttaglist = nbt.getList("Inventory", 10);
-+        ListTag creativeInventoryTagList = nbt.getList("InventoryCreative", 10);
++        ListTag creativeInventoryTagList = nbt.getList("InventoryCreative", 10); // Nabulus
  
 -        this.inventory.load(nbttaglist);
 +        // Nabulus start
@@ -104,12 +100,9 @@ index 069f658003d96a05aac0b30af1d89f15ea554475..d0fa22177a82fe98e0e8128ce22afcd7
 +        this.creativeInventory.load(creativeInventoryTagList);
 +        // Nabulus end
          this.inventory.selected = nbt.getInt("SelectedItemSlot");
-+
-+        // Nabulus end
          this.sleepCounter = nbt.getShort("SleepTimer");
          this.experienceProgress = nbt.getFloat("XpP");
-         this.experienceLevel = nbt.getInt("XpLevel");
-@@ -870,7 +883,11 @@ public abstract class Player extends LivingEntity {
+@@ -866,7 +877,11 @@ public abstract class Player extends LivingEntity {
      public void addAdditionalSaveData(CompoundTag nbt) {
          super.addAdditionalSaveData(nbt);
          nbt.putInt("DataVersion", SharedConstants.getCurrentVersion().getWorldVersion());
