@@ -5,7 +5,7 @@ Subject: [PATCH] Workaround for paperweight
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 2912fbb25dae3f7703dfba7a5e8d634ff87c525b..1ae8a991ff197d4cc6044f2f634918e287268ad3 100644
+index 6725ccf96bfcaa714b9c54d52fb7e85aeddd2810..f00ffc8ea07790428e8d8b038bcfef4d0445293c 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -3,7 +3,7 @@ import com.github.jengelman.gradle.plugins.shadow.transformers.Transformer
@@ -17,7 +17,7 @@ index 2912fbb25dae3f7703dfba7a5e8d634ff87c525b..1ae8a991ff197d4cc6044f2f634918e2
  import io.papermc.paperweight.util.Git
  import io.papermc.paperweight.util.cache
  import io.papermc.paperweight.util.defaultOutput
-@@ -111,7 +111,7 @@ publishing {
+@@ -110,7 +110,7 @@ publishing {
          artifact(tasks.shadowJar)
      }
  }
@@ -26,7 +26,7 @@ index 2912fbb25dae3f7703dfba7a5e8d634ff87c525b..1ae8a991ff197d4cc6044f2f634918e2
  val generateReobfMappings = rootProject.tasks.named<GenerateReobfMappings>("generateReobfMappings")
  
  val patchReobfMappings by tasks.registering<PatchMappings> {
-@@ -127,6 +127,7 @@ val patchReobfMappings by tasks.registering<PatchMappings> {
+@@ -126,6 +126,7 @@ val patchReobfMappings by tasks.registering<PatchMappings> {
  tasks.reobfJar {
      mappingsFile.set(patchReobfMappings.flatMap { it.outputMappings })
  }
